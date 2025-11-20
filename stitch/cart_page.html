@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shopping Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#3B82F6", // blue-500 from the design system
+            "background-light": "#F9FAFB", // gray-50
+            "background-dark": "#111827", // gray-900
+          },
+          fontFamily: {
+            display: ["Roboto", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.375rem", // md
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+<header class="bg-primary shadow-md">
+<nav class="container mx-auto px-4 lg:px-6 py-4">
+<div class="flex justify-between items-center">
+<a class="text-2xl font-bold text-white" href="#">ShopLogo</a>
+<div class="hidden lg:flex items-center space-x-8">
+<a class="text-white hover:text-gray-200" href="#">Home</a>
+<a class="text-white hover:text-gray-200" href="#">Categories</a>
+<a class="text-white hover:text-gray-200" href="#">Deals</a>
+<a class="text-white hover:text-gray-200" href="#">About</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-white hover:text-gray-200">
+<span class="material-icons-outlined">favorite_border</span>
+</button>
+<button class="relative text-white hover:text-gray-200">
+<span class="material-icons-outlined">shopping_cart</span>
+<span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+</button>
+<button class="text-white hover:text-gray-200">
+<span class="material-icons-outlined">person_outline</span>
+</button>
+</div>
+</div>
+</nav>
+</header>
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-4xl mx-auto">
+<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Shopping Cart</h1>
+<div class="lg:grid lg:grid-cols-3 lg:gap-8">
+<div class="lg:col-span-2">
+<div class="divide-y divide-gray-200 dark:divide-gray-700">
+<div class="flex items-start py-6">
+<div class="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0">
+<img alt="Black canvas sneakers" class="w-full h-full object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNd9X5qRnYB3FolGFB4NYmUGrq32uDF3-5P8-5qszK0nH1hzf8OekTAVa9xPL3Q2MEY3QARI3mxCvGzmVvCqfevdBrdepCXErbIwTwQOdO-u5hqSJ1hrsFKm7L1123fqJH6pXIQ5Vo4CSdZ9tAyOZmIg6TaOgMxk6aaIwvdrX1zz428yTDw74vbcnACjT8HBsKxvpqqjQcOxFhYgNdWlA_0ZWMqVAuBDGIwSnIMn2GBM7av4OTz0tfLa7tKVEGCwrfmvyPkIJKLr2I"/>
+</div>
+<div class="ml-4 flex-1 flex flex-col sm:ml-6">
+<div>
+<div class="flex justify-between">
+<h3 class="text-lg font-medium text-gray-900 dark:text-white">
+<a href="#">Classic Canvas Sneakers</a>
+</h3>
+<p class="ml-4 text-lg font-medium text-gray-900 dark:text-white">$69.99</p>
+</div>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Color: Black</p>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Size: M</p>
+</div>
+<div class="mt-4 flex-1 flex items-end justify-between text-sm">
+<div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
+<button class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-l-md">
+<span class="material-icons-outlined text-base">remove</span>
+</button>
+<span class="px-3 py-1 text-gray-800 dark:text-gray-200">1</span>
+<button class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-r-md">
+<span class="material-icons-outlined text-base">add</span>
+</button>
+</div>
+<div class="flex">
+<button class="font-medium text-primary hover:text-blue-600" type="button">Remove</button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-start py-6">
+<div class="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0">
+<img alt="Premium Red T-shirt" class="w-full h-full object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa1y529vwDw2ytP8wFRW8RXPUfO-mPngOu1BjI4vVpsvxX55V2iQBjJoMeOaR1oAwaNVBgvhy0FVaT5c10PpQeVRSuuflArIfOUs3Y0s31OUbpuE4hd10aWr6d8a2E8mcSh2Rmc_a_UGa-G-PjPqcSAbzv1HFV-6JzVgLp93fiNA0EGLVvF3lOI7rBMAX9bmGi97DYFBNzBo-hSg28hSyECieJnW3CbpQw1BviKykuV58O2ZZ_8IKPQRFyrAZriqiYhan-2K8DbIUs"/>
+</div>
+<div class="ml-4 flex-1 flex flex-col sm:ml-6">
+<div>
+<div class="flex justify-between">
+<h3 class="text-lg font-medium text-gray-900 dark:text-white">
+<a href="#">Premium Red T-Shirt</a>
+</h3>
+<p class="ml-4 text-lg font-medium text-gray-900 dark:text-white">$129.99</p>
+</div>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Color: Red</p>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Size: L</p>
+</div>
+<div class="mt-4 flex-1 flex items-end justify-between text-sm">
+<div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
+<button class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-l-md">
+<span class="material-icons-outlined text-base">remove</span>
+</button>
+<span class="px-3 py-1 text-gray-800 dark:text-gray-200">1</span>
+<button class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-r-md">
+<span class="material-icons-outlined text-base">add</span>
+</button>
+</div>
+<div class="flex">
+<button class="font-medium text-primary hover:text-blue-600" type="button">Remove</button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-start py-6">
+<div class="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0">
+<img alt="Denim baseball cap" class="w-full h-full object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-BFsoaoGH6oRJeNa3VfwpAS_UAWNR-vNW_LX6BixNHUkR6ACSkyt4vSts5NxfKrrt_51btOXZ8KMHsEvLc4N8fOXbXnZasqCaTrazT0Qfz1jT5JGJQJKR0ADP1imrHpnsMAJThIyX74_tzUTBIhtmCqzCWOGdD5eG7_2d4rrAehoVkV5UPE2C5JyfmseDy6U5aSXSrn62yn-cZMYjqrmdXGz0_k-4jjm4XVmZJgMEavdCkJtff9Sp9O8pmtjDFUCrbgZNsIeq827Z"/>
+</div>
+<div class="ml-4 flex-1 flex flex-col sm:ml-6">
+<div>
+<div class="flex justify-between">
+<h3 class="text-lg font-medium text-gray-900 dark:text-white">
+<a href="#">Denim Baseball Cap</a>
+</h3>
+<p class="ml-4 text-lg font-medium text-gray-900 dark:text-white">$59.99</p>
+</div>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Color: Blue</p>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Size: One Size</p>
+</div>
+<div class="mt-4 flex-1 flex items-end justify-between text-sm">
+<div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
+<button class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-l-md">
+<span class="material-icons-outlined text-base">remove</span>
+</button>
+<span class="px-3 py-1 text-gray-800 dark:text-gray-200">1</span>
+<button class="px-2 py-1 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-r-md">
+<span class="material-icons-outlined text-base">add</span>
+</button>
+</div>
+<div class="flex">
+<button class="font-medium text-primary hover:text-blue-600" type="button">Remove</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6">
+<a class="flex items-center text-primary hover:text-blue-600" href="#">
+<span class="material-icons-outlined mr-2">arrow_back</span>
+              Continue Shopping
+            </a>
+</div>
+</div>
+<div class="mt-10 lg:mt-0">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+<h2 class="text-lg font-medium text-gray-900 dark:text-white">Order Summary</h2>
+<div class="mt-6 space-y-4">
+<div class="flex items-center justify-between">
+<p class="text-sm text-gray-600 dark:text-gray-300">Subtotal</p>
+<p class="text-sm font-medium text-gray-900 dark:text-white">$259.97</p>
+</div>
+<div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pt-4">
+<p class="text-sm text-gray-600 dark:text-gray-300">Shipping</p>
+<p class="text-sm font-medium text-gray-900 dark:text-white">$9.99</p>
+</div>
+<div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pt-4">
+<p class="text-base font-medium text-gray-900 dark:text-white">Order total</p>
+<p class="text-base font-medium text-gray-900 dark:text-white">$269.96</p>
+</div>
+</div>
+<div class="mt-6">
+<button class="w-full bg-primary text-white py-3 px-4 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                Proceed to Checkout
+              </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

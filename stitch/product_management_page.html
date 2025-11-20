@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6", // Blue-500 from Tailwind's default palette
+              "background-light": "#f8fafc", // Slate-50
+              "background-dark": "#0f172a", // Slate-900
+            },
+            fontFamily: {
+              display: ["Roboto", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem", // 8px
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      .material-icons {
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-center h-16 border-b border-slate-200 dark:border-slate-700">
+<h1 class="text-xl font-bold text-slate-900 dark:text-white">Admin Panel</h1>
+</div>
+<nav class="mt-5">
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" href="#">
+<span class="material-icons mr-3">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center px-6 py-3 text-white bg-primary transition-colors" href="#">
+<span class="material-icons mr-3">inventory_2</span>
+                    Products
+                </a>
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" href="#">
+<span class="material-icons mr-3">shopping_cart</span>
+                    Orders
+                </a>
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" href="#">
+<span class="material-icons mr-3">group</span>
+                    Customers
+                </a>
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" href="#">
+<span class="material-icons mr-3">settings</span>
+                    Settings
+                </a>
+</nav>
+</aside>
+<main class="flex-1 overflow-x-hidden overflow-y-auto">
+<div class="container mx-auto px-6 py-8">
+<div class="flex justify-between items-center mb-8">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">Manage Products</h2>
+<button class="flex items-center bg-primary text-white font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition-colors">
+<span class="material-icons mr-2">add</span>
+                        Add New Product
+                    </button>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-700 dark:text-slate-300 uppercase bg-slate-50 dark:bg-slate-700">
+<tr>
+<th class="p-4" scope="col"><input class="rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:focus:ring-blue-600" type="checkbox"/></th>
+<th class="px-6 py-3" scope="col">Product Name</th>
+<th class="px-6 py-3" scope="col">Category</th>
+<th class="px-6 py-3" scope="col">Price</th>
+<th class="px-6 py-3" scope="col">Quantity</th>
+<th class="px-6 py-3" scope="col">Status</th>
+<th class="px-6 py-3" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-white dark:bg-slate-800 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600/50">
+<td class="p-4"><input class="rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:focus:ring-blue-600" type="checkbox"/></td>
+<th class="px-6 py-4 font-medium whitespace-nowrap text-slate-900 dark:text-white flex items-center" scope="row">
+<img alt="Black high-top sneakers" class="w-10 h-10 rounded-md mr-4 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeIe8kmDJYDdxHQNZQYZ7KRF1cLerDkSQ2KKjS-840fFvMIj5YvqaQaeaVw6tQtGsSxdc1nh-aOBv20s-T4MwYqSugmeHdK44lX8PCmvfCpUzCAfc4u2Z85z_6lN1CEG2bz7w2WI4qllNdG201v9uRT5Y1d-lkvSLuynQ3UcGfAgfxIBkAylcd3qEi6fZKSn2PyDoQhl78t_L2CjUDnwLoLsl0rtn9YVHU8BuJ8-M9NEy4TerdlbegaRGDCXjsgOUktAHyrdL02ikD"/>
+                                        Black High-Tops
+                                    </th>
+<td class="px-6 py-4">Shoes</td>
+<td class="px-6 py-4">$69.99</td>
+<td class="px-6 py-4">120</td>
+<td class="px-6 py-4"><span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">In Stock</span></td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-primary hover:text-blue-700 mr-2"><span class="material-icons text-base align-middle">edit</span></button>
+<button class="text-red-500 hover:text-red-700"><span class="material-icons text-base align-middle">delete</span></button>
+</td>
+</tr>
+<tr class="bg-white dark:bg-slate-800 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600/50">
+<td class="p-4"><input class="rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:focus:ring-blue-600" type="checkbox"/></td>
+<th class="px-6 py-4 font-medium whitespace-nowrap text-slate-900 dark:text-white flex items-center" scope="row">
+<img alt="Plain white t-shirt" class="w-10 h-10 rounded-md mr-4 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIbCzzzsduMACucxIsnAsDCVxI_CvZ0xgJvNzLnqW5didkV2fT4rfjl1BJ8bICu4AiOd5A9ExaxrVklEBc-nYx_kCmKEg6Y6WZq3c4VYPiowoDb5pThx836oEy9W4FjvzDFPdO1oYv4FhqaXiLOo9C85JHGEa_p28osQ0JX-RQ32XFogqRZgwYVg5i8tuDOHNJlvSVDQzbLc5WYWwP8d8dgltaly3l9jYOPhwa0dIHOyvEJQxAqJyD7a7hfaW4Gl6jKNCDiu8sxeI1"/>
+                                        Classic White Tee
+                                    </th>
+<td class="px-6 py-4">Shirts</td>
+<td class="px-6 py-4">$25.00</td>
+<td class="px-6 py-4">350</td>
+<td class="px-6 py-4"><span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">In Stock</span></td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-primary hover:text-blue-700 mr-2"><span class="material-icons text-base align-middle">edit</span></button>
+<button class="text-red-500 hover:text-red-700"><span class="material-icons text-base align-middle">delete</span></button>
+</td>
+</tr>
+<tr class="bg-white dark:bg-slate-800 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600/50">
+<td class="p-4"><input class="rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:focus:ring-blue-600" type="checkbox"/></td>
+<th class="px-6 py-4 font-medium whitespace-nowrap text-slate-900 dark:text-white flex items-center" scope="row">
+<img alt="Slim fit pants" class="w-10 h-10 rounded-md mr-4 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0PWBsso3dWbx_Vgr-Di_UjzT1UAxpXbYRhqlq824hWCUR9DopukqpE1989mloQjrYkRJX5JuZLuRbQ85t4St9ywvIsiojemWgvd6JY6f1Fn3PjrYiB6g6N3qEXOOUQSP9PaifBIuiWAsoJkQVepzZk9oYkc3LUkoHzIRKOy2itt_lVOxVI3lc-CwsTU6pFrm4wYw6wchG2cMgDr4Q19xOtKfslgcRingS2D4Dk17RZy7UgY4aursYgxrp23-fvac2x3bdP6y2ezKa"/>
+                                        Slim Fit Pants
+                                    </th>
+<td class="px-6 py-4">Pants</td>
+<td class="px-6 py-4">$89.50</td>
+<td class="px-6 py-4">75</td>
+<td class="px-6 py-4"><span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">In Stock</span></td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-primary hover:text-blue-700 mr-2"><span class="material-icons text-base align-middle">edit</span></button>
+<button class="text-red-500 hover:text-red-700"><span class="material-icons text-base align-middle">delete</span></button>
+</td>
+</tr>
+<tr class="bg-white dark:bg-slate-800 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600/50">
+<td class="p-4"><input class="rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:focus:ring-blue-600" type="checkbox"/></td>
+<th class="px-6 py-4 font-medium whitespace-nowrap text-slate-900 dark:text-white flex items-center" scope="row">
+<img alt="Beige baseball cap" class="w-10 h-10 rounded-md mr-4 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsfrR43V-LhpGyKHZZGjew1R_yGWlPp9vSq1SB7NoCMpPc23nyPBFJBFcllxV3jMpjURvXlnenJBy7yTDmXmZp1lADKwPHpieMFq5rRIwIgLtVP6JOMKpCY4gej1H8iSpPXO5DieVaZwKhiTOIHhwJK4TqbMPrf7IMB9eoV0r8tiQr6X_wQspQ9kP6nFUv6AegV6vqEn1pddo471H4CYR76M1snTQ30AWtsfflXXsuyqMdWoCZURU39853FP1SqnddT5owVWYXs9Ag"/>
+                                        Everyday Cap
+                                    </th>
+<td class="px-6 py-4">Caps</td>
+<td class="px-6 py-4">$19.99</td>
+<td class="px-6 py-4">0</td>
+<td class="px-6 py-4"><span class="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">Out of Stock</span></td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-primary hover:text-blue-700 mr-2"><span class="material-icons text-base align-middle">edit</span></button>
+<button class="text-red-500 hover:text-red-700"><span class="material-icons text-base align-middle">delete</span></button>
+</td>
+</tr>
+<tr class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-600/50">
+<td class="p-4"><input class="rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:focus:ring-blue-600" type="checkbox"/></td>
+<th class="px-6 py-4 font-medium whitespace-nowrap text-slate-900 dark:text-white flex items-center" scope="row">
+<img alt="White fedora hat" class="w-10 h-10 rounded-md mr-4 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC08fFVv9xJJvKrKQZ4J5y3nCorY4DWvmfnjlGqwI9aIc8IzQNcSuM3PaqJoCsUUHfBRa2wn37qE8pVwU-CnV0x5FuZTMJFwrynAtfJnv4lo4kukdvGl3BEBh5leaZ3V9v0WW_A_tMGoVI5gnt_N6xSg6Q3dB1cEyujqXGd4aYhs1-UnoKyC9L5r3Icwz0DfiDTiZ6pGvkpj6HIvobRnw5r7tNEmqfp4SS5EWA3wmE6PhaPQ3O-bVvLgc1t5uj0f7t7nZbmyIyR-LMC"/>
+                                        Summer Fedora
+                                    </th>
+<td class="px-6 py-4">Hats</td>
+<td class="px-6 py-4">$45.00</td>
+<td class="px-6 py-4">25</td>
+<td class="px-6 py-4"><span class="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">Low Stock</span></td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-primary hover:text-blue-700 mr-2"><span class="material-icons text-base align-middle">edit</span></button>
+<button class="text-red-500 hover:text-red-700"><span class="material-icons text-base align-middle">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<nav aria-label="Table navigation" class="flex items-center justify-between p-4 border-t border-slate-200 dark:border-slate-700">
+<span class="text-sm font-normal text-slate-500 dark:text-slate-400">
+                            Showing <span class="font-semibold text-slate-900 dark:text-white">1-5</span> of <span class="font-semibold text-slate-900 dark:text-white">100</span>
+</span>
+<ul class="inline-flex items-center -space-x-px">
+<li>
+<a class="px-3 py-2 ml-0 leading-tight text-slate-500 bg-white border border-slate-300 rounded-l-lg hover:bg-slate-100 hover:text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white" href="#">Previous</a>
+</li>
+<li>
+<a aria-current="page" class="z-10 px-3 py-2 leading-tight text-white border border-primary bg-primary hover:bg-blue-600 hover:text-white dark:border-slate-700 dark:bg-primary dark:text-white" href="#">1</a>
+</li>
+<li>
+<a class="px-3 py-2 leading-tight text-slate-500 bg-white border border-slate-300 hover:bg-slate-100 hover:text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white" href="#">2</a>
+</li>
+<li>
+<a class="px-3 py-2 leading-tight text-slate-500 bg-white border border-slate-300 hover:bg-slate-100 hover:text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white" href="#">3</a>
+</li>
+<li>
+<a class="px-3 py-2 leading-tight text-slate-500 bg-white border border-slate-300 rounded-r-lg hover:bg-slate-100 hover:text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white" href="#">Next</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

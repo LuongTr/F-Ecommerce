@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VogueVerse - My Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "primary-text-light": "#222222",
+                        "primary-text-dark": "#f0f0f0",
+                        "secondary-text-light": "#555555",
+                        "secondary-text-dark": "#aaaaaa",
+                        "border-light": "#eaeaea",
+                        "border-dark": "#2a2a2a",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#181e29",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary-text-light dark:text-primary-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+<header class="sticky top-0 z-10 w-full border-b border-border-light dark:border-border-dark bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-sm">
+<div class="container mx-auto flex items-center justify-between whitespace-nowrap px-4 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-primary-text-light dark:text-primary-text-dark">
+<span class="material-symbols-outlined text-2xl text-primary">storefront</span>
+<h2 class="text-xl font-bold tracking-tight">VogueVerse</h2>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary" href="#">New Arrivals</a>
+<a class="text-sm font-medium hover:text-primary" href="#">Clothing</a>
+<a class="text-sm font-medium hover:text-primary" href="#">Shoes</a>
+<a class="text-sm font-medium hover:text-primary" href="#">Accessories</a>
+<a class="text-sm font-medium hover:text-primary" href="#">Sale</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4">
+<div class="hidden sm:flex items-center">
+<label class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary-text-light dark:text-secondary-text-dark text-xl">search</span>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-10 placeholder:text-secondary-text-light dark:placeholder:text-secondary-text-dark pl-10 pr-4 text-sm focus:border-primary focus:ring-primary/50" placeholder="Search..." value=""/>
+</label>
+</div>
+<div class="flex gap-2">
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent text-primary-text-light dark:text-primary-text-dark hover:bg-black/5 dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-2xl">favorite_border</span>
+</button>
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent text-primary-text-light dark:text-primary-text-dark hover:bg-black/5 dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAs5_P0VLlI3RthO5A3L-IksDY6UmbvOuGKA9HPOjQKdyJhLWFm86XhLukzQxA8_frUEg8TLQp6oxlE2qR_aSYQOMYKDt6pooRVXZcQ_o3uf2veqg1XelmSjWpe7Zr12Vd5Dtrnsla_nYdHbQt-yweV_wLSJ36M0yHhWzZV6QptU352kbFD0eqLFHyjl96yZ55Q17E4qySoDJtRAShkIJ4ZFkim3fJ3tQjcDep5mwrcNsA3Sz99JcIMajNKUx573NRMw2E1X7EPHZL9");'></div>
+</div>
+</div>
+</header>
+<main class="container mx-auto flex flex-1 flex-col px-4 py-8 md:flex-row md:gap-8 lg:gap-12">
+<!-- Side Navigation -->
+<aside class="w-full md:w-64 lg:w-72 flex-shrink-0 mb-8 md:mb-0">
+<div class="flex h-full flex-col justify-between rounded-lg bg-surface-light dark:bg-surface-dark p-4 border border-border-light dark:border-border-dark">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAROFJnFVcsGFKhirIhFxyl53xFDp7ik44w1w9kf5aFkXA64XPxr1S4HIvdh474c_hrJObLHZxi0a2XUS5KVfMEf7JbGG-J4hDePZxhF98Xt6-aGXqLUfnHeSL39iTGF-PddSk_M_TUvOqYb68f7f5wq4RMKy7vL82eanlcGrAYDTubgXKEo8akqkx9--m9CtyHC6RLkZa7VfGLVS9-ByJGqA2x-7QEGbrgo3_1-E0MKGZxYtLsW5rgj_B_QPwc57SbQye-IXy8xAVW");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-bold">Eleanor Vance</h1>
+<p class="text-sm text-secondary-text-light dark:text-secondary-text-dark">eleanor@example.com</p>
+</div>
+</div>
+<div class="flex flex-col gap-1 pt-4">
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 dark:bg-primary/20 px-3 py-2 text-primary" href="#">
+<span class="material-symbols-outlined text-xl">person</span>
+<p class="text-sm font-semibold">My Profile</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/5" href="#">
+<span class="material-symbols-outlined text-xl">receipt_long</span>
+<p class="text-sm font-medium">Order History</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/5" href="#">
+<span class="material-symbols-outlined text-xl">home</span>
+<p class="text-sm font-medium">Saved Addresses</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/5" href="#">
+<span class="material-symbols-outlined text-xl">logout</span>
+<p class="text-sm font-medium">Sign Out</p>
+</a>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1">
+<!-- My Profile Section -->
+<section class="flex flex-col gap-6">
+<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+<h2 class="text-3xl font-extrabold tracking-tight">My Profile</h2>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary/90">
+<span class="material-symbols-outlined text-base">edit</span>
+<span>Edit Profile</span>
+</button>
+</div>
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+<div class="flex flex-col">
+<label class="mb-1.5 text-sm font-medium text-secondary-text-light dark:text-secondary-text-dark">First Name</label>
+<input class="form-input w-full rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-3 text-base placeholder:text-secondary-text-light dark:placeholder:text-secondary-text-dark focus:border-primary focus:ring-primary/50" readonly="" value="Eleanor"/>
+</div>
+<div class="flex flex-col">
+<label class="mb-1.5 text-sm font-medium text-secondary-text-light dark:text-secondary-text-dark">Last Name</label>
+<input class="form-input w-full rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-3 text-base placeholder:text-secondary-text-light dark:placeholder:text-secondary-text-dark focus:border-primary focus:ring-primary/50" readonly="" value="Vance"/>
+</div>
+<div class="flex flex-col sm:col-span-2">
+<label class="mb-1.5 text-sm font-medium text-secondary-text-light dark:text-secondary-text-dark">Email Address</label>
+<input class="form-input w-full rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-3 text-base placeholder:text-secondary-text-light dark:placeholder:text-secondary-text-dark focus:border-primary focus:ring-primary/50" readonly="" value="eleanor@example.com"/>
+</div>
+</div>
+</section>
+<hr class="my-10 border-border-light dark:border-border-dark"/>
+<!-- Order History Section -->
+<section class="flex flex-col gap-6">
+<h2 class="text-3xl font-extrabold tracking-tight">Order History</h2>
+<div class="overflow-x-auto rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark text-left text-sm">
+<thead class="bg-background-light dark:bg-background-dark">
+<tr>
+<th class="px-6 py-3 font-semibold" scope="col">Order ID</th>
+<th class="px-6 py-3 font-semibold" scope="col">Date</th>
+<th class="px-6 py-3 font-semibold" scope="col">Total</th>
+<th class="px-6 py-3 font-semibold" scope="col">Status</th>
+<th class="relative py-3.5 pl-3 pr-4 sm:pr-6" scope="col"><span class="sr-only">View</span></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium">#34562</td>
+<td class="whitespace-nowrap px-6 py-4 text-secondary-text-light dark:text-secondary-text-dark">Oct 12, 2023</td>
+<td class="whitespace-nowrap px-6 py-4 text-secondary-text-light dark:text-secondary-text-dark">$245.50</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-300">Shipped</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-right">
+<a class="font-semibold text-primary hover:underline" href="#">View Details</a>
+</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium">#34198</td>
+<td class="whitespace-nowrap px-6 py-4 text-secondary-text-light dark:text-secondary-text-dark">Sep 28, 2023</td>
+<td class="whitespace-nowrap px-6 py-4 text-secondary-text-light dark:text-secondary-text-dark">$112.00</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/50 px-2 py-1 text-xs font-medium text-yellow-800 dark:text-yellow-300">Processing</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-right">
+<a class="font-semibold text-primary hover:underline" href="#">View Details</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="my-10 border-border-light dark:border-border-dark"/>
+<!-- Saved Addresses Section -->
+<section class="flex flex-col gap-6">
+<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+<h2 class="text-3xl font-extrabold tracking-tight">Saved Addresses</h2>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-primary px-5 py-2.5 text-sm font-semibold text-primary shadow-sm transition-colors hover:bg-primary/10">
+<span class="material-symbols-outlined text-base">add</span>
+<span>Add New Address</span>
+</button>
+</div>
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+<div class="rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6">
+<div class="flex items-center justify-between">
+<h3 class="font-bold">Home Address</h3>
+<div class="flex gap-2">
+<button class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-red-500 hover:bg-red-500/10">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-4 space-y-1 text-sm text-secondary-text-light dark:text-secondary-text-dark">
+<p>Eleanor Vance</p>
+<p>123 Dream Lane</p>
+<p>Apt 4B</p>
+<p>Faketown, FS 54321</p>
+<p>United States</p>
+</div>
+</div>
+<div class="rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6">
+<div class="flex items-center justify-between">
+<h3 class="font-bold">Work Address</h3>
+<div class="flex gap-2">
+<button class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="flex h-8 w-8 items-center justify-center rounded-lg text-red-500 hover:bg-red-500/10">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-4 space-y-1 text-sm text-secondary-text-light dark:text-secondary-text-dark">
+<p>Eleanor Vance</p>
+<p>456 Business Blvd</p>
+<p>Suite 900</p>
+<p>Metropolis, MS 12345</p>
+<p>United States</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Empty State Example (for illustration) -->
+<!-- <section class="flex flex-col gap-6">
+                    <h2 class="text-3xl font-extrabold tracking-tight">Order History</h2>
+                    <div class="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark py-16 text-center">
+                        <span class="material-symbols-outlined text-5xl text-secondary-text-light dark:text-secondary-text-dark">shopping_bag</span>
+                        <h3 class="mt-4 text-lg font-semibold">No Orders Yet</h3>
+                        <p class="mt-1 text-sm text-secondary-text-light dark:text-secondary-text-dark">You haven't placed any orders yet. Let's change that!</p>
+                        <button class="mt-6 flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary/90">
+                            Start Shopping
+                        </button>
+                    </div>
+                </section> -->
+</div>
+</main>
+</div>
+</body></html>

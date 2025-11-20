@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Detail Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#3b82f6", // Blue-500 from Tailwind palette
+            "background-light": "#f9fafb", // Gray-50
+            "background-dark": "#111827",  // Gray-900
+          },
+          fontFamily: {
+            display: ["Roboto", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem", // 4px
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+<header class="bg-primary shadow-md">
+<nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<span class="text-white text-xl font-bold">ShopLogo</span>
+</div>
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-4">
+<a class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium" href="#">Home</a>
+<a class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium" href="#">Categories</a>
+<a class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium" href="#">Deals</a>
+<a class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium" href="#">About</a>
+</div>
+</div>
+</div>
+<div class="hidden md:block">
+<div class="ml-4 flex items-center md:ml-6 space-x-4">
+<button class="text-white p-1 rounded-full hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
+<span class="material-icons">favorite_border</span>
+</button>
+<button class="text-white p-1 rounded-full hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
+<span class="material-icons">shopping_cart</span>
+</button>
+<button class="text-white p-1 rounded-full hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white">
+<span class="material-icons">person_outline</span>
+</button>
+</div>
+</div>
+<div class="-mr-2 flex md:hidden">
+<button class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-200 focus:outline-none" type="button">
+<span class="material-icons">menu</span>
+</button>
+</div>
+</div>
+</nav>
+</header>
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+<div class="max-w-6xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+<div>
+<div class="aspect-square w-full bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden mb-4">
+<img alt="Premium Red T-Shirt - main view" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb9cVYN_Kaa-_MQJhAcuZSFElvyNLgOtJ6ndOdzU-XsNc6PrBGqJc0DYsG_-OcfZhQ1zm4d1ItEOrouZeMzdhCSMeQxQAQEm29tV0qlLpPjogULqjpIuP8HTGRB1PyYPaKHTfbl-qHwhYQrNVpoyMR9_3f-BVWysLgx0H-Xly_haIrRZYE6lssZIA1v68IQ9TQ13P0I_ieuBE7cXTUU5JnpIndKG6Bcf7QpXridYqSX5BjYMZIhaZhWpmb0WAWkebsf4F2BN6gNGxt"/>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden cursor-pointer border-2 border-primary">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLb4ye7ziXXW9pHonBUX7RTk7-lVTEKjOApyqbWWIFSAv0P6bZsJf6PuFZa7aQCtXZW61jw9EftL0-u68_bM37nDPQrHt6kHnPQS8LFng1pAoBGLFzR_VMoFtp2ZnDJFe8gPRqIXtfLk7XIao97YzIu6ZiZlUrMMhrneuSaxLz3YK8jh2Qb482vG4dVt91i5_SSzyU50MBVx-Bw94gTuAp1VVKVsYpJQc_7I6e-1ih9qGLYb3-KpUuPdr2sXbfBXpjPWWV6dOVqlDz"/>
+</div>
+<div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden cursor-pointer">
+<img alt="Thumbnail 2" class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSykWvSDjMGxxwjR4g65hu1DVLfmVaAr_0fnPkyObmvHPwL5XdcLIKgeukiJVbphEfOVStXqBr9dao4uN5k6LXBl7GUargufF1rwlGWnCGrNhZRcYwKa1931cA_SgrUJPOZVSZTgG4-G_2x7KGum9ph9MUDyKq8ql_DBYw5EkhdNJIXVHLlam8MCfoZZRLYAe5o9hpJDW8EZAz9Arow9Hh4FrhDu5P7R_UiVa4heA4YFj65zi6LnLKcZQ0r2PlKSt2TMARFji3J3CE"/>
+</div>
+<div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden cursor-pointer">
+<img alt="Thumbnail 3" class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCt9FbCuyYv4CSTVlsQRPS9BDFbT96FubXkdBZmoS3CWM9DERZyQGqXkW_K45PWlozS6JqtjRw08L1mxFvF-HMsK8_I2fYUn5JtpdENf8qGqM5BV0NbljQ23f5SgQeHpgOmvP5DzERLZ3MTpaI6uUOcoM4khOSmN1rMvuDCCEG-9djaDsMhZWcY2JaniDElytjGt845JhR8RvWctieoLdoCqCVgcw0nRVFYcJNSjN80u9sN-AOO-BjhE9tOLaysCZe3faZwu1ZgAst"/>
+</div>
+</div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-3xl font-bold text-gray-900 dark:text-white">Premium Red T-Shirt</h1>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-2">SKU: PRD-001</p>
+<p class="text-4xl font-bold text-gray-900 dark:text-white my-4">$199.99</p>
+<div>
+<h2 class="text-lg font-semibold text-gray-900 dark:text-white">Description</h2>
+<p class="text-gray-600 dark:text-gray-300 mt-2">
+              Detailed product description goes here. This product offers excellent quality and value.
+            </p>
+</div>
+<div class="mt-6">
+<h3 class="text-sm font-medium text-gray-900 dark:text-white">Size</h3>
+<fieldset class="mt-2">
+<legend class="sr-only">Choose a size</legend>
+<div class="flex gap-2">
+<label class="group relative border rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none cursor-pointer bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 shadow-sm">
+<input class="sr-only" name="size-choice" type="radio" value="S"/>
+<span>S</span>
+</label>
+<label class="group relative border rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none cursor-pointer bg-primary border-transparent text-white shadow-sm">
+<input checked="" class="sr-only" name="size-choice" type="radio" value="M"/>
+<span>M</span>
+</label>
+<label class="group relative border rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none cursor-pointer bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 shadow-sm">
+<input class="sr-only" name="size-choice" type="radio" value="L"/>
+<span>L</span>
+</label>
+<label class="group relative border rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none cursor-pointer bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 shadow-sm">
+<input class="sr-only" name="size-choice" type="radio" value="XL"/>
+<span>XL</span>
+</label>
+</div>
+</fieldset>
+</div>
+<div class="mt-6">
+<h3 class="text-sm font-medium text-gray-900 dark:text-white">Quantity</h3>
+<div class="flex items-center mt-2">
+<button class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-l-md hover:bg-gray-100 dark:hover:bg-gray-700">-</button>
+<input class="w-12 text-center border-t border-b border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-gray-900 dark:text-white" readonly="" type="text" value="1"/>
+<button class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-r-md hover:bg-gray-100 dark:hover:bg-gray-700">+</button>
+</div>
+</div>
+<div class="mt-8 flex gap-4">
+<button class="flex-1 bg-primary text-white py-3 px-6 rounded-md font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">Add to Cart</button>
+<button class="p-3 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-icons text-gray-600 dark:text-gray-300">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

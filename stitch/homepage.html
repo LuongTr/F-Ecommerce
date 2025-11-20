@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modern Fashion E-commerce</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#3b82f6", // blue-500
+            "background-light": "#f8fafc", // slate-50
+            "background-dark": "#0f172a", // slate-900
+          },
+          fontFamily: {
+            display: ["Poppins", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem", // 8px
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    .hero-bg {
+      background-image: url('https://images.unsplash.com/photo-1513094735237-8f2714d57c13?q=80&w=2535&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+    }
+    @media (min-width: 768px) {
+      .hero-bg {
+        background-image: url('https://images.unsplash.com/photo-1551232864-3f0890e580d9?q=80&w=2487&auto=format&fit=crop');
+        background-position: center;
+      }
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-700 dark:text-slate-300">
+<div id="root">
+<header class="bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center">
+<a class="font-bold text-2xl text-slate-900 dark:text-white" href="#">LOGO</a>
+<nav class="hidden md:flex items-center space-x-6 ml-10">
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#">Categories</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#">Products</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#">About</a>
+<a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<div class="hidden sm:block relative">
+<span class="material-icons-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-colors" placeholder="Search products..." type="text"/>
+</div>
+<a class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-icons-outlined">person_outline</span>
+</a>
+<a class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors relative" href="#">
+<span class="material-icons-outlined">shopping_cart</span>
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-medium text-white">2</span>
+</a>
+<button class="md:hidden p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800">
+<span class="material-icons-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main>
+<section class="relative h-[60vh] md:h-[80vh] w-full hero-bg">
+<div class="absolute inset-0 bg-black/30"></div>
+<div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+<div class="max-w-lg text-white">
+<h1 class="text-4xl md:text-6xl font-bold mb-4">Discover Your Signature Style</h1>
+<p class="text-lg md:text-xl mb-8 text-slate-200">Explore the latest trends and timeless classics in our diverse clothing collection. Quality, comfort, and fashion in every stitch.</p>
+<a class="bg-white text-slate-900 font-semibold px-8 py-3 rounded-lg hover:bg-slate-200 transition-colors" href="#">Shop Now</a>
+</div>
+</div>
+</section>
+<section class="py-16 sm:py-24">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<h2 class="text-3xl font-bold text-center mb-12 text-slate-900 dark:text-white">Shop by Category</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="group relative overflow-hidden rounded-lg">
+<img alt="Black canvas shoes" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXTishOK34vaJfmD_B7Ei1DxBjJxL7Y7caP5iBtz5_nUWsjGjtmqEKIPJfsiUs6kwJDGPkoUKUsnhap79kg7svApmisqfwnjCzZp7tY6Um7I-YLwHE7m7XQXMYzjVMFAiOL3jPxyjHWNjVaOqMAWEsORyOcNVqrd2ce3QFqgtlibaYXAUoSrQZGfEGTcjzp-IL-zcQgJ_JZRlHUjIoxiX7vATe9NUB3e9R9pkxPdYMeDZNYH-Xp1HRGzd-T5K2_WfzNfjcQ5lLqGW6"/>
+<div class="absolute inset-0 bg-black/40"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<h3 class="text-xl font-semibold text-white">Shoes</h3>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-lg">
+<img alt="Folded t-shirts" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfYPYkMDbI3n7JZZ_-Dez5CJqEhS2rGVw9m4ejE1V-D-wZKHa8BsW0iovwg3x5ehIi874lr0NS47dK-RgvrW3dTlKloobIg_UKOJcpPE469M9M7e_q3syugh3gYMnE4pQ62rZt37B_-7XubzpohKugPfAKi7cTw4orxS9f_0Ef_gQ14Bu0ZgJV8pufEYO9yEunADhybas_3mGaof7d9Uezb1uo8nKK3TCpHKvWaHAEyCzpMA1-RIIZyN24pYp37cPBrEsdLtTVHNAE"/>
+<div class="absolute inset-0 bg-black/40"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<h3 class="text-xl font-semibold text-white">Shirts</h3>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-lg">
+<img alt="Person wearing trousers" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi2i04IhCZWY5bL1WyNwV8r9cBcg3ch6CXPQwh-d2DwZHlg7eOGeiLggz1l3EKwtbXyVdfb-bdOcfiiS745Lpws6bF5cGf7WVkxLrYzT3NRnhpOCSTYjb-1NA3Bsk1RyVCPsOzjQkjfLJY3LgN7sINSjVFiBD7U5RrCro6x0nQ_EhvhDEMnNPyzN2DBAL4_CwfDjPUE3S2Ac45yHDvFJUd87nlGwaWLKo-RlLgm_XV76a18dF8KWK0aqhZ9JbnPRBvFs5lWLVRIKL2"/>
+<div class="absolute inset-0 bg-black/40"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<h3 class="text-xl font-semibold text-white">Pants</h3>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-lg">
+<img alt="Beige cap" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3gUimpzORbk5nwsVIhkcPufy2wxaLcZqzzMc0gzPg_baQuE2WM9f6mlV2kSaLk0cGeZbW7Dli9QSx1PEmbN61YNYZiI8dEAjgdT6tFpmbRDLWyaME4r9LBHu3vSpW8fHf0TR64b_aprhDLqjxRmd1UigQ2_eMS3CZGrWYO57TDxiRGans1XyU-w74PRdS5jWsmD54gzubyPkvZ-JkLh6HaR8cBXckVojB3JrqGhpAOJZO2PUWwOKNFMTEtm2upg8nA08MobwcLP7A"/>
+<div class="absolute inset-0 bg-black/40"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<h3 class="text-xl font-semibold text-white">Caps</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-slate-100 dark:bg-slate-800 py-16 sm:py-24">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<h2 class="text-3xl font-bold text-center mb-12 text-slate-900 dark:text-white">Featured Products</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="bg-background-light dark:bg-background-dark rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+<a href="#">
+<img alt="White fedora hat" class="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJnwS-bB1hNRrHL5hoffqfye-y1_QuMnGXDNzUPCmd21r3Oa_JaVMkmTpc6y_79fxbXQmdKgcIsmQql5_6q6G8KBIvuBw0pryDGouyyWYCgS5_pybs6ZkMKZuyOBR18qlESkE4sdqQQju-Ay_vmTDDU3tFWsOK76DVdxahvAVhPGMaacYLxxX-pAOld2njGXyrbPtIKR3sleZYguTeIKWAKHDypBK53nWQnvMpcIc5iJVoJCVor9Z1JO4Jz-riiKtx7yFAWw7eLNdu"/>
+</a>
+<div class="p-6">
+<h3 class="font-semibold text-lg text-slate-900 dark:text-white">Classic Fedora</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">A timeless accessory for any look.</p>
+<div class="flex items-center justify-between mt-4">
+<span class="font-bold text-xl text-primary">$99.99</span>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-background-light dark:bg-background-dark rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+<a href="#">
+<img alt="Black canvas sneakers" class="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGaXsOMtQY3RdPG7PyHr48DpiDjNUNwOr7gnxRTbizaGiy7RrbqRh2NV72tZyR7hohaw9MEwwc9DoIMK0dHKowCNaPNVwE_XcSk8v-WRGaQajzlEqdfbWwFBmZNCTB5TKkCUI71lC_TtzXKjTV1LDdgaxIFzMCr-evU4klFryfxLMNPlgJ0mpgbE0k8v624ELhSo0oMHyBPwdFh1sT9P_J7jk4ufqJlWYNMTUj9b0eLeAcK6K3BM2NkRL23rxJLQfRUfzBnFVOZ2L_"/>
+</a>
+<div class="p-6">
+<h3 class="font-semibold text-lg text-slate-900 dark:text-white">Canvas Sneakers</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Comfortable and stylish for everyday wear.</p>
+<div class="flex items-center justify-between mt-4">
+<span class="font-bold text-xl text-primary">$79.99</span>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-background-light dark:bg-background-dark rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+<a href="#">
+<img alt="Yellow graphic t-shirt" class="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_u7Efrfu3U3UJlSN0DmflSYybjZcboHoVhzdMlepNWkfCuG7f1TEuHEdLm9oc_21exFaZIQ4rVRmm-B4Gjartbci6nuVr81mQA1J9gghLsQ8sRleSfJtYlJT2YdMeYs6UR7ryZWaLc1-lVXfjZIxLxRTmlWVHxhSPWfSfjbi43H94GHOc9BY0hi-aG3yvNHZNfAymWEM7d3EBHCijgon3RIQJV7GCsyP0T_o4_ZCq3hz60utJrEFLXNqQhoFW7NQaM_YxnebSRJav"/>
+</a>
+<div class="p-6">
+<h3 class="font-semibold text-lg text-slate-900 dark:text-white">Graphic T-Shirt</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Make a statement with this unique tee.</p>
+<div class="flex items-center justify-between mt-4">
+<span class="font-bold text-xl text-primary">$39.99</span>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-background-light dark:bg-background-dark rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+<a href="#">
+<img alt="Blue denim cap" class="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVNB09T8B309XCmh5mcaKkk0VLK15tLNpR-xgMksMcRc05BU2QPLGM_zX9AiXMjKLq4XhRWoybMEceN3HOI6RRe2ROp2BqS3P6QpE-Z4oWMqcLi51akdN5HkacMeBuekKarmqCmSh87nYy8v1utp0Wdg6cwsrWA11Zy8ANE_OH445qhTPoRARjS9Nbs04FcZelDnhlx0B0Y7bdSsndmAqZDeHLAUJboEHEz_NxIoAQ93vRXEF7vDWk2gyeUQm_KZTXoR58Oi_nXVtG"/>
+</a>
+<div class="p-6">
+<h3 class="font-semibold text-lg text-slate-900 dark:text-white">Denim Baseball Cap</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">A casual staple for any wardrobe.</p>
+<div class="flex items-center justify-between mt-4">
+<span class="font-bold text-xl text-primary">$29.99</span>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<a class="bg-transparent border-2 border-primary text-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary hover:text-white transition-colors" href="#">View All Products</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-gradient-to-r from-[#003A8C] via-[#2D3191] to-[#386BB4] text-slate-300">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="md:col-span-1">
+<h3 class="text-2xl font-bold text-white mb-4">LOGO</h3>
+<p class="text-slate-300">Your trusted online shopping destination for quality products at great prices.</p>
+<div class="flex space-x-4 mt-4">
+<a class="text-slate-300 hover:text-white transition-colors" href="#"><svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg></a>
+<a class="text-slate-300 hover:text-white transition-colors" href="#"><svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg></a>
+<a class="text-slate-300 hover:text-white transition-colors" href="#"><svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.345 2.525c.636-.247 1.363-.416 2.427-.465C9.793 2.013 10.147 2 12.315 2zm-1.003 3.636c-2.404.0-4.35 1.946-4.35 4.35s1.946 4.35 4.35 4.35 4.35-1.946 4.35-4.35S13.716 5.636 11.312 5.636zM12 15.11a3.11 3.11 0 110-6.22 3.11 3.11 0 010 6.22zm4.85-8.235a1.166 1.166 0 11-2.332 0 1.166 1.166 0 012.332 0z" fill-rule="evenodd"></path></svg></a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">About Us</a></li>
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">Contact</a></li>
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">FAQ</a></li>
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">Shipping Info</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold text-white mb-4">Categories</h4>
+<ul class="space-y-2">
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">Electronics</a></li>
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">Fashion</a></li>
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">Home &amp; Garden</a></li>
+<li><a class="text-slate-300 hover:text-white hover:underline transition-colors" href="#">Sports</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold text-white mb-4">Newsletter</h4>
+<p class="text-slate-300 mb-4">Subscribe to get updates on new products and offers.</p>
+<form class="flex">
+<input class="w-full rounded-l-lg border-0 py-2 px-3 text-slate-900 focus:ring-2 focus:ring-inset focus:ring-primary" placeholder="Enter your email" type="email"/>
+<button class="bg-primary text-white font-semibold px-4 py-2 rounded-r-lg hover:bg-blue-600 transition-colors">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
+<p>© 2024 Your Store. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

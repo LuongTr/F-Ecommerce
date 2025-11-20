@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Products - Fashion Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+    tailwind.config = {
+      // No dark mode needed for this version
+      theme: {
+        extend: {
+          colors: {
+            primary: "#3b82f6", // blue-500
+            "background-light": "#f8fafc", // slate-50
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem", // 8px
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background-light text-slate-800">
+<header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200">
+<div class="container mx-auto px-4">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center space-x-8">
+<a class="text-xl font-bold bg-slate-900 text-white px-4 py-1 rounded-md" href="#">LOGO</a>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Categories</a>
+<a class="text-primary font-semibold" href="#">Products</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">About</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<div class="relative hidden sm:block">
+<input class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 border border-slate-300 rounded-md focus:ring-primary focus:border-primary" placeholder="Search products..." type="text"/>
+<span class="material-icons-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+</div>
+<button class="p-2 rounded-full hover:bg-slate-100 transition-colors">
+<span class="material-icons-outlined text-slate-600">person_outline</span>
+</button>
+<button class="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
+<span class="material-icons-outlined text-slate-600">shopping_cart_outline</span>
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-medium text-white">3</span>
+</button>
+<button class="md:hidden p-2 rounded-full hover:bg-slate-100 transition-colors" id="mobile-menu-button">
+<span class="material-icons-outlined text-slate-600">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="container mx-auto px-4 py-8 sm:py-12">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+<aside class="lg:col-span-1 space-y-6">
+<div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+<h3 class="text-lg font-semibold mb-4 text-slate-900">Price Range</h3>
+<div class="space-y-3">
+<label class="flex items-center space-x-3 text-slate-600">
+<input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary bg-slate-100" type="checkbox"/>
+<span>$0 - $50</span>
+</label>
+<label class="flex items-center space-x-3 text-slate-600">
+<input checked="" class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary bg-slate-100" type="checkbox"/>
+<span>$50 - $100</span>
+</label>
+<label class="flex items-center space-x-3 text-slate-600">
+<input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary bg-slate-100" type="checkbox"/>
+<span>$100 - $200</span>
+</label>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+<h3 class="text-lg font-semibold mb-4 text-slate-900">Brand</h3>
+<div class="space-y-3">
+<label class="flex items-center space-x-3 text-slate-600">
+<input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary bg-slate-100" type="checkbox"/>
+<span>Brand A</span>
+</label>
+<label class="flex items-center space-x-3 text-slate-600">
+<input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary bg-slate-100" type="checkbox"/>
+<span>Brand B</span>
+</label>
+<label class="flex items-center space-x-3 text-slate-600">
+<input checked="" class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary bg-slate-100" type="checkbox"/>
+<span>Brand C</span>
+</label>
+</div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+<h3 class="text-lg font-semibold mb-4 text-slate-900">Size</h3>
+<div class="grid grid-cols-3 gap-2">
+<button class="px-3 py-2 text-sm border border-slate-300 rounded-md hover:bg-slate-100 text-slate-700">XS</button>
+<button class="px-3 py-2 text-sm border-primary rounded-md bg-primary text-white">S</button>
+<button class="px-3 py-2 text-sm border border-slate-300 rounded-md hover:bg-slate-100 text-slate-700">M</button>
+<button class="px-3 py-2 text-sm border border-slate-300 rounded-md hover:bg-slate-100 text-slate-700">L</button>
+<button class="px-3 py-2 text-sm border border-slate-300 rounded-md hover:bg-slate-100 text-slate-700">XL</button>
+<button class="px-3 py-2 text-sm border border-slate-300 rounded-md hover:bg-slate-100 text-slate-700">XXL</button>
+</div>
+</div>
+</aside>
+<section class="lg:col-span-3">
+<div class="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+<h2 class="text-3xl font-bold text-slate-900">All Products</h2>
+<div class="flex items-center space-x-2">
+<label class="text-sm text-slate-500" for="sort">Sort by:</label>
+<select class="w-40 text-sm border-slate-300 bg-white rounded-md shadow-sm focus:ring-primary focus:border-primary" id="sort">
+<option>Featured</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+<option>Newest</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+<div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col group">
+<div class="relative overflow-hidden">
+<img alt="Beige Cap" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCETx5xScsOgtz4xiGcpFbG5fx5cX4rLj5n8BdnBUmgKfktJmKYt29LPodjd_G9m49LW5Ve9tiKdjuM2Z57V_VVrs_EVB5tD5RwhDeIJl_146nmG-c5MylTmsPybCXBcjDXT-Aug_-1LJFqdz34GOsMooiHsxImSzzYN03wJsxdMKZtmtx66l9IJoSM2XS5sQI9-9qsPG7Pysk4tSuKsWR7Vp4J5hdnKxcX_YkkZwoczPzM6S2NISmvk6Sj5zfw_6BWqV8EAHuToAE0"/>
+</div>
+<div class="p-4 flex-grow flex flex-col">
+<h3 class="text-lg font-semibold text-slate-900 mb-1">Classic Baseball Cap</h3>
+<p class="text-sm text-slate-500 mb-4 flex-grow">A timeless and versatile cap.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-lg font-bold text-slate-900">$25.00</span>
+<button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col group">
+<div class="relative overflow-hidden">
+<img alt="White Fedora Hat" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ17dpD7m6U09pd5r-Vv91e9Bys6Hl3TdjYmsPnN8hTryGXwp5hJX_hWBYb30dvRU-Q_QWSXDGJpYRYIGh0oVVK-yfb-NjScZxyHm5dfYyn6aWbYbuBOkpll1OWF3RoGYpDJA7g18BZVNmF2z7XojgMsslQiQbjjBEfkq9qT0-EG07LIRfPG0xJ6TgY2IVUDgCQ0JbtMYjgJQPrGo7WalOMmOINUsw95xKYGhv9uhcVbSSxcYhe60-c5Bwt_RI3sndv8azTHdJ4iGA"/>
+</div>
+<div class="p-4 flex-grow flex flex-col">
+<h3 class="text-lg font-semibold text-slate-900 mb-1">Stylish Fedora Hat</h3>
+<p class="text-sm text-slate-500 mb-4 flex-grow">Elegant fedora for any occasion.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-lg font-bold text-slate-900">$129.99</span>
+<button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col group">
+<div class="relative overflow-hidden">
+<img alt="Black Canvas Sneakers" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9fStjRo7UmcNCIQBPKUJZNvmlX9y38VHnIIWlzYvdOTBBuUMFsmnne55ViRCR3WbeP-EG974AfpiTDmE7z_DvtGXY3_v6HSuMfsAuOL7q5HtbaF2httRaUN-a6lzKuwb6b1JnUgBhxWLkJBhuCqwrxppjjKY307Yyjb9SNoRhDW6XvWW7Wvgs_exGZaqIyCFjhmi_sbrFutNLKEBcN2xTVas4b3KVH_f5fjWmPltymd8Hzb88WJo5acuofAYfGnYcPRWPpmjEySCp"/>
+</div>
+<div class="p-4 flex-grow flex flex-col">
+<h3 class="text-lg font-semibold text-slate-900 mb-1">Canvas High-Tops</h3>
+<p class="text-sm text-slate-500 mb-4 flex-grow">Comfortable and classic sneakers.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-lg font-bold text-slate-900">$69.99</span>
+<button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col group">
+<div class="relative overflow-hidden">
+<img alt="Blue Crewneck Sweatshirt" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9lm6uQ7eI__aua4D9CU7eOuqx7dDl7imEzfJDNtybIW1KDUP-1QraKsf7fFVoliA3qHtTMRbDhG5YymCfhYs0rMgcgeUQpFzRyRZUGIvrXkttDCZyMgx-Wx8h-uYtF7Z-IPU0EUsWX-twyqAsPw4VGPqSnqeZXzwIylG0zGbBMsVMJbF5J0B1laX0lTjJxEDprBlQ_PCMXa9pYmpg8FEe_x7nP91iyXxePdeG9sEI6x2AJpTsAM8MahfbvfWpqC9ZF0f6q40NIlmo"/>
+</div>
+<div class="p-4 flex-grow flex flex-col">
+<h3 class="text-lg font-semibold text-slate-900 mb-1">Cozy Crewneck</h3>
+<p class="text-sm text-slate-500 mb-4 flex-grow">Soft and warm for chilly days.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-lg font-bold text-slate-900">$85.00</span>
+<button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col group">
+<div class="relative overflow-hidden">
+<img alt="Orange Graphic T-Shirt" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUYl8tPY43sn9Ey9JhebEszjpiIGUL7BS61zXF0flgbBPTIM0ZeRth7kmhUnPRoRF0vBD7ZBzrEmkTB0h5n07dJhxWo9wLDxrdbyTEn-rITAjYHXR7O3YHvTupdzePaMCsDn6e-EGsNgi_F1KdyTFrCQ8wQgV7NIJavgy5EJERTEnPDXTeHo5fHvMA9RdZ2N-7qEJ8qNF2JHh-4JzFfYOjyAjCk90_n-wa26NZnkzQj6EUaRKztuHqqBSQSu9xYWgmhtoKEFTmtC4-"/>
+</div>
+<div class="p-4 flex-grow flex flex-col">
+<h3 class="text-lg font-semibold text-slate-900 mb-1">Graphic Print Tee</h3>
+<p class="text-sm text-slate-500 mb-4 flex-grow">Unique design, premium cotton.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-lg font-bold text-slate-900">$35.00</span>
+<button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col group">
+<div class="relative overflow-hidden">
+<img alt="Red T-Shirt with text 'No Internet'" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxesSZ59JKBNd92xu9-aGw5u_Zlgza2JSagC7RQMdvy7DLzN76M6_GjBcncs2ehnboUlJFEPc65bQUUGYngxNtBV0lVkU9gLkAsSjcJIkyghzAkNp-o-BpcNRIe6NT3rml_h41XXxict2uastk6XrjiEjcDlKkiryfNNDunvr55oUOO1_feJg_FWJqrBONmYg8IHpSiz1ygEAN8izCnf3D54UVV86e6B39cSNLiPuURm0v_tUB-PmjbjDsDy_HhOdD-gp4RJGsa0y6"/>
+</div>
+<div class="p-4 flex-grow flex flex-col">
+<h3 class="text-lg font-semibold text-slate-900 mb-1">"No Internet" Tee</h3>
+<p class="text-sm text-slate-500 mb-4 flex-grow">A funny and relatable graphic t-shirt.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-lg font-bold text-slate-900">$29.99</span>
+<button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+
+</body></html>
