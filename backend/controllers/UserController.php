@@ -14,7 +14,7 @@ class UserController
 
             // Get user info
             $userInfo = $db->fetchOne(
-                "SELECT id, first_name, last_name, email, phone, avatar, created_at FROM users WHERE id = ?",
+                "SELECT id, first_name, last_name, email, phone, avatar, role, created_at FROM users WHERE id = ?",
                 [$user['user_id']]
             );
 
@@ -321,6 +321,96 @@ class UserController
             JWTHandler::sendSuccess(null, 'Avatar deleted successfully');
         } catch (Exception $e) {
             JWTHandler::sendError('Failed to delete avatar: ' . $e->getMessage(), 500);
+        }
+    }
+
+    // Admin functions for user management
+    public static function getAllUsers()
+    {
+        JWTHandler::requireAdmin(); // Only admins can access this
+
+        try {
+            $db = Database::getInstance();
+
+            $users = $db->fetchAll(
+                "SELECT id, first_name, last_name, email, phone, avatar, role, created_at FROM users ORDER BY created_at DESC"
+            );
+
+            JWTHandler::sendSuccess(['users' => $users]);
+        } catch (Exception $e) {
+            JWTHandler::sendError('Failed to get users: ' . $e->getMessage(), 500);
+        }
+    }
+
+    public static function updateUserRole($userId)
+    {
+        JWTHandler::requireAdmin(); // Only admins can access this
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['role']) || !in_array($data['role'], ['admin', 'user'])) {
+            JWTHandler::sendError('Valid role (admin or user) is required', 400);
+        }
+
+        $role = $data['role'];
+
+        try {
+            $db = Database::getInstance();
+
+            // Check if user exists
+            $userExists = $db->fetchOne(
+                "SELECT id FROM users WHERE id = ?",
+                [$userId]
+            );
+
+            if (!$userExists) {
+                JWTHandler::sendError('User not found', 404);
+            }
+
+            // Update user role
+            $updated = $db->update(
+                'users',
+                ['role' => $role],
+                ['id' => $userId]
+            );
+
+            if ($updated === 0) {
+                JWTHandler::sendError('No changes made', 400);
+            }
+
+            JWTHandler::sendSuccess(['role' => $role], 'User role updated successfully');
+        } catch (Exception $e) {
+            JWTHandler::sendError('Failed to update user role: ' . $e->getMessage(), 500);
+        }
+    }
+
+    public static function deleteUser($userId)
+    {
+        JWTHandler::requireAdmin(); // Only admins can access this
+
+        try {
+            $db = Database::getInstance();
+
+            // Check if user exists
+            $userExists = $db->fetchOne(
+                "SELECT id FROM users WHERE id = ?",
+                [$userId]
+            );
+
+            if (!$userExists) {
+                JWTHandler::sendError('User not found', 404);
+            }
+
+            // Delete user
+            $deleted = $db->delete('users', ['id' => $userId]);
+
+            if ($deleted === 0) {
+                JWTHandler::sendError('User could not be deleted', 500);
+            }
+
+            JWTHandler::sendSuccess(null, 'User deleted successfully');
+        } catch (Exception $e) {
+            JWTHandler::sendError('Failed to delete user: ' . $e->getMessage(), 500);
         }
     }
 }

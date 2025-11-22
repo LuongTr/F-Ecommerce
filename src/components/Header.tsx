@@ -5,6 +5,7 @@ interface UserData {
   firstName: string;
   lastName: string;
   avatar?: string;
+  role?: string;
 }
 
 const Header: React.FC = () => {
@@ -34,10 +35,13 @@ const Header: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         const user = data.data ? data.data.user : data.user;
+        console.log('Header - User profile data:', user);
+        console.log('Header - User role:', user.role);
         setUserData({
           firstName: user.first_name,
           lastName: user.last_name,
-          avatar: user.avatar
+          avatar: user.avatar,
+          role: user.role
         });
         setIsLoggedIn(true);
       } else {
@@ -110,8 +114,6 @@ const Header: React.FC = () => {
     { name: 'Home', path: '/' },
     { name: 'Categories', path: '/categories' },
     { name: 'Products', path: '/products' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
   ];
 
   const isActiveLink = (path: string) => {
@@ -126,6 +128,9 @@ const Header: React.FC = () => {
     setUserData(null);
     navigate('/');
   };
+
+  const isAdmin = userData?.role === 'admin';
+  console.log('Header - isAdmin:', isAdmin, 'userRole:', userData?.role);
 
   return (
     <header className="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800">
@@ -152,6 +157,20 @@ const Header: React.FC = () => {
                   {item.name}
                 </Link>
               ))}
+
+              {/* Admin Panel Link - Only for admins */}
+              {isAdmin && (
+                <Link
+                  to="/admin/orders"
+                  className={`text-sm font-medium transition-colors ${
+                    isActiveLink('/admin')
+                      ? 'text-red-500'
+                      : 'text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-500'
+                  }`}
+                >
+                  Admin Panel
+                </Link>
+              )}
             </nav>
           </div>
 
@@ -271,6 +290,22 @@ const Header: React.FC = () => {
                   {item.name}
                 </Link>
               ))}
+
+              {/* Admin Panel Link - Only for admins in mobile menu */}
+              {isAdmin && (
+                <Link
+                  to="/admin/orders"
+                  className={`text-sm font-medium transition-colors ${
+                    isActiveLink('/admin')
+                      ? 'text-red-500'
+                      : 'text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-500'
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Admin Panel
+                </Link>
+              )}
+
               {isLoggedIn && (
                 <button
                   onClick={() => {

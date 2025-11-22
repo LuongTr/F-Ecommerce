@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
@@ -9,12 +9,18 @@ import CheckoutPage from './pages/CheckoutPage';
 import LoginPage from './pages/LoginPage';
 import UserProfilePage from './pages/UserProfilePage';
 import OrderManagementPage from './pages/OrderManagementPage';
-import ProductManagementPage from './pages/ProductManagementPage';
+import AdminProductManagement from './pages/AdminProductManagement';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminUsers from './pages/AdminUsers';
+import AdminSettings from './pages/AdminSettings';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/admin');
+
   return (
     <div className="min-h-screen bg-slate-50">
-      <Header />
+      {!isAdminPage && <Header />}
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -24,12 +30,19 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/orders" element={<OrderManagementPage />} />
-          <Route path="/admin/products" element={<ProductManagementPage />} />
+          <Route path="/admin/products" element={<AdminProductManagement />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
         </Routes>
       </main>
     </div>
   );
+}
+
+function App() {
+  return <AppContent />;
 }
 
 export default App;

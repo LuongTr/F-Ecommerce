@@ -53,6 +53,9 @@ try {
         case 'PUT':
             handlePut($uri_parts);
             break;
+        case 'PATCH':
+            handlePut($uri_parts); // PATCH is handled the same as PUT
+            break;
         case 'DELETE':
             handleDelete($uri_parts);
             break;
@@ -120,12 +123,17 @@ function handleGet($parts)
 
         case 'admin':
             if (isset($parts[1])) {
+                // Require admin role for all admin endpoints
+                JWTHandler::requireAdmin();
                 switch ($parts[1]) {
                     case 'orders':
                         OrderController::getAllOrders();
                         break;
                     case 'products':
                         ProductController::getProducts();
+                        break;
+                    case 'users':
+                        UserController::getAllUsers();
                         break;
                     default:
                         JWTHandler::sendError('Endpoint not found', 404);
@@ -265,6 +273,25 @@ function handlePut($parts)
             }
             break;
 
+        case 'admin':
+            if (isset($parts[1]) && isset($parts[2])) {
+                JWTHandler::requireAdmin();
+                switch ($parts[1]) {
+                    case 'users':
+                        if ($parts[2] === 'role' && isset($parts[3])) {
+                            UserController::updateUserRole($parts[3]);
+                        } else {
+                            JWTHandler::sendError('Endpoint not found', 404);
+                        }
+                        break;
+                    default:
+                        JWTHandler::sendError('Endpoint not found', 404);
+                }
+            } else {
+                JWTHandler::sendError('Endpoint not found', 404);
+            }
+            break;
+
         default:
             JWTHandler::sendError('Endpoint not found', 404);
     }
@@ -300,6 +327,21 @@ function handleDelete($parts)
         case 'orders':
             if (isset($parts[1])) {
                 OrderController::cancelOrder($parts[1]);
+            } else {
+                JWTHandler::sendError('Endpoint not found', 404);
+            }
+            break;
+
+        case 'admin':
+            if (isset($parts[1]) && isset($parts[2])) {
+                JWTHandler::requireAdmin();
+                switch ($parts[1]) {
+                    case 'users':
+                        UserController::deleteUser($parts[2]);
+                        break;
+                    default:
+                        JWTHandler::sendError('Endpoint not found', 404);
+                }
             } else {
                 JWTHandler::sendError('Endpoint not found', 404);
             }

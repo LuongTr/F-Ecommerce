@@ -16,7 +16,7 @@ class JWTHandler
         self::$expiration = (int)(getenv('JWT_EXPIRATION') ?: 3600);
     }
 
-    public static function generateToken($userId, $email)
+    public static function generateToken($userId, $email, $role = 'user')
     {
         $issuedAt = time();
         $expireAt = $issuedAt + self::$expiration;
@@ -26,7 +26,8 @@ class JWTHandler
             'iat' => $issuedAt,
             'exp' => $expireAt,
             'user_id' => $userId,
-            'email' => $email
+            'email' => $email,
+            'role' => $role
         ]);
 
         $encodedHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
@@ -115,6 +116,31 @@ class JWTHandler
             'data' => $data
         ]);
         exit;
+    }
+
+    // Role-based access control methods
+    public static function requireAdmin()
+    {
+        $user = self::requireAuth();
+        if ($user['role'] !== 'admin') {
+            self::sendError('Admin access required', 403);
+        }
+        return $user;
+    }
+
+    public static function requireUser()
+    {
+        $user = self::requireAuth();
+        if ($user['role'] !== 'user') {
+            self::sendError('User access required', 403);
+        }
+        return $user;
+    }
+
+    public static function isAdmin($user = null)
+    {
+        if (!$user) $user = self::requireAuth();
+        return isset($user['role']) && $user['role'] === 'admin';
     }
 
     public static function sendCorsHeaders()

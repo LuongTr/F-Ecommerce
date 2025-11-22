@@ -48,6 +48,8 @@ const LoginPage: React.FC = () => {
         if (response.ok && data.error === false) {
           // Store token and redirect to homepage
           localStorage.setItem('authToken', data.data.token);
+          // Force header to update immediately
+          window.dispatchEvent(new Event('storage'));
           navigate('/');
         } else {
           setError(data.message || 'Login failed');
