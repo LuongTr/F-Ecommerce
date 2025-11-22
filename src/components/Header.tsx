@@ -1,10 +1,110 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+interface UserData {
+  firstName: string;
+  lastName: string;
+  avatar?: string;
+}
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const location = useLocation();
+  const navigate = useNavigate();
   const isLoginPage = location.pathname === '/login';
+
+  const fetchUserProfile = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      setUserData(null);
+      setIsLoggedIn(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const user = data.data ? data.data.user : data.user;
+        setUserData({
+          firstName: user.first_name,
+          lastName: user.last_name,
+          avatar: user.avatar
+        });
+        setIsLoggedIn(true);
+      } else {
+        console.warn('Failed to fetch user profile');
+        setUserData(null);
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.warn('Error fetching user profile:', error);
+      setUserData(null);
+      setIsLoggedIn(false);
+    }
+  };
+
+  const fetchCartCount = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      setCartCount(0);
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/cart', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const count = data.data ? (data.data.total_items || 0) : (data.total_items || 0);
+        setCartCount(count);
+      }
+    } catch (err) {
+      console.warn('Failed to fetch cart count:', err);
+    }
+  };
+
+  // Expose fetchCartCount globally so other components can call it
+  (window as any).updateCartCount = fetchCartCount;
+
+  const checkAuthState = () => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      // Immediately set as logged in with basic state
+      setIsLoggedIn(true);
+      setCartCount(0); // Will be updated below
+
+      // Then fetch user data and cart count
+      fetchUserProfile();
+      fetchCartCount();
+    } else {
+      setUserData(null);
+      setIsLoggedIn(false);
+      setCartCount(0);
+    }
+  };
+
+  useEffect(() => {
+    // Check auth state whenever location changes
+    checkAuthState();
+  }, [location]);
+
+  // Also check auth state immediately on mount
+  useEffect(() => {
+    checkAuthState();
+  }, []);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -18,6 +118,13 @@ const Header: React.FC = () => {
     if (path === '/' && location.pathname === '/') return true;
     if (path !== '/' && location.pathname.startsWith(path)) return true;
     return false;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setIsLoggedIn(false);
+    setUserData(null);
+    navigate('/');
   };
 
   return (
@@ -65,15 +172,42 @@ const Header: React.FC = () => {
             )}
 
             {/* Profile */}
-            <Link
-              to="/profile"
-              className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-              title="Profile"
-            >
-              <span className="material-icons-outlined text-slate-700 dark:text-slate-300">
-                person_outline
-              </span>
-            </Link>
+            {isLoggedIn ? (
+              // Logged in state - show user avatar and name
+              <Link
+                to="/profile"
+                className="flex items-center space-x-2 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+                title="Profile"
+              >
+                {userData?.avatar ? (
+                  <img
+                    src={`/${userData.avatar}`}
+                    alt={`${userData.firstName} ${userData.lastName}`}
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-8 h-8 bg-slate-300 dark:bg-slate-600 rounded-full flex items-center justify-center">
+                    <span className="material-icons-outlined text-slate-600 dark:text-slate-400 text-lg">
+                      person
+                    </span>
+                  </div>
+                )}
+                <span className="hidden sm:block text-slate-700 dark:text-slate-300 text-sm">
+                  {userData ? `${userData.firstName} ${userData.lastName}` : 'Account'}
+                </span>
+              </Link>
+            ) : (
+              // Not logged in - show login link
+              <Link
+                to="/login"
+                className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+                title="Login"
+              >
+                <span className="material-icons-outlined text-slate-700 dark:text-slate-300">
+                  person_outline
+                </span>
+              </Link>
+            )}
 
             {/* Cart */}
             <Link
@@ -85,7 +219,7 @@ const Header: React.FC = () => {
                 shopping_cart
               </span>
               <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-blue-500 text-xs font-medium text-white">
-                2
+                {cartCount}
               </span>
             </Link>
 
@@ -137,6 +271,18 @@ const Header: React.FC = () => {
                   {item.name}
                 </Link>
               ))}
+              {isLoggedIn && (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-500 flex items-center space-x-2"
+                >
+                  <span className="material-icons-outlined text-base">logout</span>
+                  <span>Logout</span>
+                </button>
+              )}
             </nav>
           </div>
         )}

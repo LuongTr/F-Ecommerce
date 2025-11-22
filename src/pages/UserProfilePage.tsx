@@ -1,44 +1,206 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 
 const UserProfilePage: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    firstName: 'Eleanor',
-    lastName: 'Vance',
-    email: 'eleanor@example.com'
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    avatar: ''
   });
+  const [orderHistory, setOrderHistory] = useState<any[]>([]);
+  const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock order history
-  const orderHistory = [
-    {
-      id: '#34562',
-      date: 'Oct 12, 2023',
-      total: 245.50,
-      status: 'Shipped',
-      statusColor: 'green'
-    },
-    {
-      id: '#34198',
-      date: 'Sep 28, 2023',
-      total: 112.00,
-      status: 'Processing',
-      statusColor: 'yellow'
-    }
-  ];
+  // Get token from localStorage
+  const getToken = () => localStorage.getItem('authToken');
 
-  // Mock saved addresses
-  const savedAddresses = [
-    {
-      type: 'Home Address',
-      lines: ['Eleanor Vance', '123 Dream Lane', 'Apt 4B', 'Faketown, FS 54321']
-    },
-    {
-      type: 'Work Address',
-      lines: ['Eleanor Vance', '456 Business Blvd', 'Suite 900', 'Metropolis, MS 12345']
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      const token = getToken();
+      if (!token) {
+        setError('Please login to view your profile');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Fetch user profile
+        const profileResponse = await fetch('http://localhost:8000/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+
+          if (profileData.error === false && profileData.data) {
+            const user = profileData.data.user;
+            setUserInfo({
+              firstName: user.first_name || '',
+              lastName: user.last_name || '',
+              email: user.email || '',
+              phone: user.phone || '',
+              avatar: user.avatar || ''
+            });
+
+            // Process addresses
+            const addresses = (profileData.data.addresses || []).map((addr: any) => ({
+              id: addr.id,
+              type: addr.address_type,
+              lines: [
+                addr.first_name + ' ' + addr.last_name,
+                addr.street_address,
+                addr.apartment ? 'Apt ' + addr.apartment : null,
+                `${addr.city}, ${addr.state_province || ''} ${addr.postal_code}`,
+                addr.country
+              ].filter(Boolean)
+            }));
+            setSavedAddresses(addresses);
+          }
+        } else {
+          setError('Failed to load profile data');
+        }
+
+        // Fetch order history
+        const ordersResponse = await fetch('http://localhost:8000/orders', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (ordersResponse.ok) {
+          const ordersData = await ordersResponse.json();
+          const processedOrders = (ordersData.data.orders || []).map((order: any) => ({
+            id: order.order_number || order.id,
+            date: new Date(order.ordered_at).toLocaleDateString(),
+            total: parseFloat(order.total_amount),
+            status: order.status.charAt(0).toUpperCase() + order.status.slice(1),
+            statusColor: order.status === 'delivered' ? 'green' : order.status === 'pending' || order.status === 'processing' ? 'yellow' : 'gray'
+          }));
+          setOrderHistory(processedOrders);
+        }
+
+      } catch (err) {
+        console.error('Error loading profile:', err);
+        setError('Failed to load profile data');
+        // Fallback to mock data if API fails
+        setUserInfo({
+          firstName: 'Eleanor',
+          lastName: 'Vance',
+          email: 'eleanor@example.com',
+          phone: '+1-555-0123',
+          avatar: ''
+        });
+        setOrderHistory([
+          {
+            id: '#34562',
+            date: 'Oct 12, 2023',
+            total: 245.50,
+            status: 'Shipped',
+            statusColor: 'green'
+          },
+          {
+            id: '#34198',
+            date: 'Sep 28, 2023',
+            total: 112.00,
+            status: 'Processing',
+            statusColor: 'yellow'
+          }
+        ]);
+        setSavedAddresses([
+          {
+            id: 1,
+            type: 'Home Address',
+            lines: ['Eleanor Vance', '123 Dream Lane', 'Apt 4B', 'Faketown, FS 54321']
+          },
+          {
+            id: 2,
+            type: 'Work Address',
+            lines: ['Eleanor Vance', '456 Business Blvd', 'Suite 900', 'Metropolis, MS 12345']
+          }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  const handleAvatarUpload = async (file: File | undefined) => {
+    if (!file) return;
+
+    const token = getToken();
+    if (!token) return;
+
+    setUploadingAvatar(true);
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    try {
+      const response = await fetch('http://localhost:8000/profile/avatar/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setUserInfo(prev => ({ ...prev, avatar: result.data.avatar }));
+        alert('Avatar uploaded successfully!');
+      } else {
+        console.error('Upload failed:', response.statusText);
+        alert('Failed to upload avatar. Please try again.');
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Failed to upload avatar. Please try again.');
+    } finally {
+      setUploadingAvatar(false);
     }
-  ];
+  };
+
+  const handleAvatarDelete = async () => {
+    if (!confirm('Are you sure you want to remove your avatar?')) return;
+
+    const token = getToken();
+    if (!token) return;
+
+    setUploadingAvatar(true);
+    try {
+      const response = await fetch('http://localhost:8000/profile/avatar/delete', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        setUserInfo(prev => ({ ...prev, avatar: '' }));
+        alert('Avatar removed successfully!');
+      } else {
+        console.error('Delete failed:', response.statusText);
+        alert('Failed to remove avatar. Please try again.');
+      }
+    } catch (err) {
+      console.error('Delete error:', err);
+      alert('Failed to remove avatar. Please try again.');
+    } finally {
+      setUploadingAvatar(false);
+    }
+  };
 
   const handleInputChange = (field: string, value: string) => {
     setUserInfo(prev => ({ ...prev, [field]: value }));
@@ -53,16 +215,71 @@ const UserProfilePage: React.FC = () => {
     setEditMode(false);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    window.location.href = '/';
+  };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mb-4"></div>
+          <p className="text-slate-600 dark:text-slate-400">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <Button onClick={() => window.location.reload()}>Try Again</Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Center the entire content */}
       <div className="flex flex-col gap-8">
         {/* User Info Header */}
         <div className="text-center">
-          <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-20 mx-auto mb-4 bg-blue-500 flex items-center justify-center">
-            <span className="material-icons text-white text-3xl">account_circle</span>
+          <div className="relative inline-block">
+            {userInfo.avatar ? (
+              <img
+                src={`/${userInfo.avatar}`}
+                alt={`${userInfo.firstName} ${userInfo.lastName}`}
+                className="w-20 h-20 rounded-full object-cover mx-auto mb-4"
+              />
+            ) : (
+              <div className="bg-blue-500 rounded-full size-20 mx-auto mb-4 flex items-center justify-center">
+                <span className="material-icons text-white text-3xl">account_circle</span>
+              </div>
+            )}
+            {/* Camera Icon Overlay */}
+            <label className="absolute bottom-3 right-3 w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-full cursor-pointer flex items-center justify-center shadow-lg transition-colors">
+              <span className="material-icons text-white text-base">camera_alt</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleAvatarUpload(e.target.files?.[0])}
+                disabled={uploadingAvatar}
+                className="hidden"
+              />
+            </label>
+            {/* Loading overlay */}
+            {uploadingAvatar && (
+              <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
+                <span className="material-icons text-white text-lg animate-spin">refresh</span>
+              </div>
+            )}
           </div>
-          <h1 className="text-2xl font-bold flex items-center justify-center gap-2">
+          <h1 className="text-2xl font-bold flex items-center justify-center gap-2 mt-2">
             {userInfo.firstName} {userInfo.lastName}
             <span className="material-icons text-slate-500 text-lg">verified</span>
           </h1>
@@ -70,6 +287,18 @@ const UserProfilePage: React.FC = () => {
             <span className="material-icons text-sm">email</span>
             {userInfo.email}
           </p>
+          <div className="mt-4">
+            <Button
+              variant="secondary"
+              onClick={() => {
+                localStorage.removeItem('authToken');
+                window.location.href = '/';
+              }}
+            >
+              <span className="material-icons text-base mr-2">logout</span>
+              <span>Logout</span>
+            </Button>
+          </div>
         </div>
 
         {/* Main Content Area */}
@@ -201,7 +430,9 @@ const UserProfilePage: React.FC = () => {
                         <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
                           order.statusColor === 'green'
                             ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'
-                            : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300'
+                            : order.statusColor === 'yellow'
+                            ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300'
+                            : 'bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-300'
                         }`}>
                           <span className="material-icons text-xs mr-1">circle</span>
                           {order.status}
@@ -236,7 +467,7 @@ const UserProfilePage: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {savedAddresses.map((address, index) => (
+              {savedAddresses.map((address: any, index: number) => (
                 <div key={index} className="rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-lg flex items-center gap-2">
@@ -253,7 +484,7 @@ const UserProfilePage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-1 text-sm text-slate-600 dark:text-slate-400">
-                    {address.lines.map((line, idx) => (
+                    {address.lines.map((line: string, idx: number) => (
                       <p key={idx} className={idx === 0 ? 'flex items-center gap-1' : ''}>
                         {idx === 0 && <span className="material-icons text-xs">person</span>}
                         {line}
