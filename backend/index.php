@@ -238,12 +238,11 @@ function handlePut($parts)
 {
     switch ($parts[0] ?? '') {
         case 'profile':
-            if (isset($parts[1])) {
-                if ($parts[1] === 'addresses' && isset($parts[2])) {
-                    UserController::updateAddress($parts[2]);
-                } else {
-                    UserController::updateProfile();
-                }
+            if (!isset($parts[1])) {
+                // PUT /profile - update user profile
+                UserController::updateProfile();
+            } elseif ($parts[1] === 'addresses' && isset($parts[2])) {
+                UserController::updateAddress($parts[2]);
             } else {
                 JWTHandler::sendError('Endpoint not found', 404);
             }
