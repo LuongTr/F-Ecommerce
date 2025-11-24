@@ -210,9 +210,47 @@ const UserProfilePage: React.FC = () => {
     setEditMode(!editMode);
   };
 
-  const handleSave = () => {
-    console.log('Saving profile:', userInfo);
-    setEditMode(false);
+  const handleSave = async () => {
+    try {
+      const token = getToken();
+      if (!token) {
+        alert('Please login to save changes');
+        return;
+      }
+
+      const response = await fetch('http://localhost:8000/profile', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          first_name: userInfo.firstName,
+          last_name: userInfo.lastName,
+          email: userInfo.email,
+          phone: userInfo.phone
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setUserInfo(prev => ({
+          ...prev,
+          firstName: result.data.user.first_name || userInfo.firstName,
+          lastName: result.data.user.last_name || userInfo.lastName,
+          email: result.data.user.email || userInfo.email,
+          phone: result.data.user.phone || userInfo.phone
+        }));
+        setEditMode(false);
+        alert('Profile updated successfully!');
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Failed to update profile');
+      }
+    } catch (err) {
+      console.error('Error saving profile:', err);
+      alert('Failed to save profile. Please try again.');
+    }
   };
 
   const handleLogout = () => {

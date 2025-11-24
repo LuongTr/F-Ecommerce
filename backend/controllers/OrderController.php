@@ -372,9 +372,9 @@ class OrderController
         try {
             $db = Database::getInstance();
 
-            // Get cart items with product details
+            // Get cart items with product details and variants
             $cartItems = $db->fetchAll(
-                "SELECT sc.id, sc.product_id, sc.quantity, sc.created_at,
+                "SELECT sc.id, sc.product_id, sc.quantity, sc.size, sc.color, sc.created_at,
                         p.name as product_name, p.price, p.sku, p.images, p.quantity as stock_quantity
                  FROM shopping_cart sc
                  JOIN products p ON sc.product_id = p.id
@@ -415,6 +415,8 @@ class OrderController
 
         $productId = (int)$data['product_id'];
         $quantity = (int)$data['quantity'];
+        $size = isset($data['size']) ? trim($data['size']) : null;
+        $color = isset($data['color']) ? trim($data['color']) : null;
 
         if ($quantity < 1) {
             JWTHandler::sendError('Quantity must be at least 1', 400);
@@ -437,14 +439,16 @@ class OrderController
                 JWTHandler::sendError('Insufficient stock available', 400);
             }
 
-            // Check if item already exists in cart
+            // Check if item with same variant already exists in cart
             $existingItem = $db->fetchOne(
-                "SELECT * FROM shopping_cart WHERE user_id = ? AND product_id = ?",
-                [$user['user_id'], $productId]
+                "SELECT * FROM shopping_cart
+                 WHERE user_id = ? AND product_id = ?
+                 AND (size <=> ? OR size IS NULL) AND (color <=> ? OR color IS NULL)",
+                [$user['user_id'], $productId, $size, $color]
             );
 
             if ($existingItem) {
-                // Update quantity
+                // Update quantity for existing variant
                 $newQuantity = $existingItem['quantity'] + $quantity;
 
                 if ($product['quantity'] < $newQuantity) {
@@ -453,15 +457,16 @@ class OrderController
 
                 $db->update('shopping_cart', ['quantity' => $newQuantity], ['id' => $existingItem['id']]);
             } else {
-                // Add new item
+                // Add new item with variant
                 $db->insert('shopping_cart', [
                     'user_id' => $user['user_id'],
                     'product_id' => $productId,
-                    'quantity' => $quantity
+                    'quantity' => $quantity,
+                    'size' => $size,
+                    'color' => $color
                 ]);
             }
 
-            // Get updated cart
             return self::getCart();
         } catch (Exception $e) {
             JWTHandler::sendError('Failed to add to cart: ' . $e->getMessage(), 500);

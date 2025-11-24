@@ -17,6 +17,8 @@ const ProductDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [addToCartLoading, setAddToCartLoading] = useState(false);
@@ -24,6 +26,14 @@ const ProductDetailPage: React.FC = () => {
   // Mock attributes for now (could be added to database later)
   const productSizes = ['7', '8', '9', '10', '11'];
   const productColors = ['White', 'Black', 'Blue'];
+
+  const handleSizeSelect = (size: string) => {
+    setSelectedSize(selectedSize === size ? null : size);
+  };
+
+  const handleColorSelect = (color: string) => {
+    setSelectedColor(selectedColor === color ? null : color);
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -156,6 +166,17 @@ const ProductDetailPage: React.FC = () => {
 
     if (!product) return;
 
+    // Validate size and color selection
+    if (!selectedSize) {
+      alert('Please select a size before adding to cart');
+      return;
+    }
+
+    if (!selectedColor) {
+      alert('Please select a color before adding to cart');
+      return;
+    }
+
     try {
       setAddToCartLoading(true);
 
@@ -168,13 +189,15 @@ const ProductDetailPage: React.FC = () => {
         body: JSON.stringify({
           product_id: product.id,
           quantity: selectedQuantity,
+          size: selectedSize,
+          color: selectedColor,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert(`Product added to cart successfully! (Quantity: ${selectedQuantity})`);
+        alert(`Product added to cart successfully! Size: ${selectedSize}, Color: ${selectedColor}, Quantity: ${selectedQuantity}`);
         // Update cart count in header immediately
         if ((window as any).updateCartCount) {
           (window as any).updateCartCount();
@@ -256,12 +279,19 @@ const ProductDetailPage: React.FC = () => {
 
           {/* Size Selection */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Size</h3>
+            <h3 className="text-lg font-semibold mb-3">
+              Size {!selectedSize && <span className="text-red-500 text-sm">*</span>}
+            </h3>
             <div className="flex gap-2 flex-wrap">
               {productSizes.map((size: string) => (
                 <button
                   key={size}
-                  className="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-md hover:border-blue-500 transition-colors"
+                  onClick={() => handleSizeSelect(size)}
+                  className={`px-4 py-2 border rounded-md transition-all ${
+                    selectedSize === size
+                      ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300'
+                      : 'border-slate-300 dark:border-slate-700 hover:border-blue-500'
+                  }`}
                 >
                   {size}
                 </button>
@@ -271,12 +301,19 @@ const ProductDetailPage: React.FC = () => {
 
           {/* Color Selection */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Color</h3>
+            <h3 className="text-lg font-semibold mb-3">
+              Color {!selectedColor && <span className="text-red-500 text-sm">*</span>}
+            </h3>
             <div className="flex gap-2 flex-wrap">
               {productColors.map((color: string) => (
                 <button
                   key={color}
-                  className="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-md hover:border-blue-500 transition-colors"
+                  onClick={() => handleColorSelect(color)}
+                  className={`px-4 py-2 border rounded-md transition-all ${
+                    selectedColor === color
+                      ? 'border-green-500 bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300'
+                      : 'border-slate-300 dark:border-slate-700 hover:border-green-500'
+                  }`}
                 >
                   {color}
                 </button>

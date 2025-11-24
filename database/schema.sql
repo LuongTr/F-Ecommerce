@@ -85,6 +85,9 @@ CREATE TABLE `products` (
   `sku` VARCHAR(100) UNIQUE,
   `images` JSON COMMENT 'Array of image URLs',
   `status` ENUM('in_stock', 'low_stock', 'out_of_stock') DEFAULT 'in_stock',
+  `brand` VARCHAR(100) COMMENT 'Product brand/manufacturer',
+  `tags` JSON COMMENT 'Search tags and keywords for filtering',
+  `rating` DECIMAL(3,2) DEFAULT 0.00 COMMENT 'Average product rating (0-5)',
   `is_active` BOOLEAN DEFAULT TRUE,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -92,8 +95,11 @@ CREATE TABLE `products` (
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
   INDEX `idx_category` (`category_id`),
   INDEX `idx_status` (`status`),
+  INDEX `idx_brand` (`brand`),
+  INDEX `idx_rating` (`rating`),
   INDEX `idx_active` (`is_active`),
   INDEX `idx_slug` (`slug`)
+  -- Note: JSON tags indexing removed for MySQL compatibility
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -107,12 +113,14 @@ CREATE TABLE `shopping_cart` (
   `session_id` VARCHAR(255) COMMENT 'For non-logged users',
   `product_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL DEFAULT 1,
+  `size` VARCHAR(50) DEFAULT NULL COMMENT 'Selected size variant',
+  `color` VARCHAR(50) DEFAULT NULL COMMENT 'Selected color variant',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  UNIQUE KEY `unique_cart_item` (`user_id`, `session_id`, `product_id`),
+  UNIQUE KEY `unique_cart_item_variant` (`user_id`, `session_id`, `product_id`, `size`, `color`),
   INDEX `idx_user_session` (`user_id`, `session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

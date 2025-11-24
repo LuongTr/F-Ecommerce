@@ -203,7 +203,11 @@ const HomePage: React.FC = () => {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Button variant="secondary" size="lg">
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => window.location.href = '/products'}
+            >
               View All Products
             </Button>
           </div>
