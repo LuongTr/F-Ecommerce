@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface UserData {
@@ -13,9 +13,41 @@ const Header: React.FC = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [selectedSearchIndex, setSelectedSearchIndex] = useState(-1);
   const location = useLocation();
   const navigate = useNavigate();
   const isLoginPage = location.pathname === '/login';
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        searchInputRef.current &&
+        !searchInputRef.current.contains(event.target as Node)
+      ) {
+        setShowSearchDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Clear search on route change
+  useEffect(() => {
+    setSearchQuery('');
+    setSearchResults([]);
+    setShowSearchDropdown(false);
+    setSelectedSearchIndex(-1);
+  }, [location.pathname]);
 
   const fetchUserProfile = async () => {
     const token = localStorage.getItem('authToken');
@@ -132,6 +164,144 @@ const Header: React.FC = () => {
   const isAdmin = userData?.role === 'admin';
   console.log('Header - isAdmin:', isAdmin, 'userRole:', userData?.role);
 
+  // Enhanced search function with dropdown results
+  const performSearch = async (query: string, showResults = true) => {
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) {
+      setSearchResults([]);
+      setShowSearchDropdown(false);
+      setSelectedSearchIndex(-1);
+      return;
+    }
+
+    setIsSearching(true);
+    setSelectedSearchIndex(-1);
+
+    try {
+      const response = await fetch(`http://localhost:8000/products?search=${encodeURIComponent(trimmedQuery)}&limit=8`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const products = data.data?.products || [];
+
+        // Process products for display
+        const processedProducts = products.map((product: any) => ({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price) || 0,
+          image: product.images ? (Array.isArray(product.images) ? product.images[0] : JSON.parse(product.images)[0]) : '/placeholder-product.jpg'
+        }));
+
+        setSearchResults(processedProducts);
+        if (showResults && processedProducts.length > 0) {
+          setShowSearchDropdown(true);
+        } else {
+          setShowSearchDropdown(false);
+        }
+      } else {
+        console.warn('Search API failed:', response.status);
+        setSearchResults([]);
+        setShowSearchDropdown(false);
+      }
+    } catch (err) {
+      console.error('Search error:', err);
+      setSearchResults([]);
+      setShowSearchDropdown(false);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    // Debounced search
+    if (value.trim()) {
+      // Clear previous timeout
+      if ((window as any).searchTimeout) {
+        clearTimeout((window as any).searchTimeout);
+      }
+
+      // Set new timeout for search
+      (window as any).searchTimeout = setTimeout(() => {
+        performSearch(value);
+      }, 300);
+    } else {
+      setSearchResults([]);
+      setShowSearchDropdown(false);
+      setSelectedSearchIndex(-1);
+    }
+  };
+
+  // Handle search form submission
+  const handleSearchSubmit = () => {
+    if (selectedSearchIndex >= 0 && selectedSearchIndex < searchResults.length) {
+      // Navigate to selected product
+      const product = searchResults[selectedSearchIndex];
+      setSearchQuery('');
+      setShowSearchDropdown(false);
+      setSelectedSearchIndex(-1);
+      navigate(`/product/${product.id}`);
+    } else if (searchResults.length > 0) {
+      // Navigate to first result
+      const product = searchResults[0];
+      setSearchQuery('');
+      setShowSearchDropdown(false);
+      setSelectedSearchIndex(-1);
+      navigate(`/product/${product.id}`);
+    }
+  };
+
+  // Handle Enter key in search input
+  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearchSubmit();
+    } else if (e.key === 'Escape') {
+      setShowSearchDropdown(false);
+      setSelectedSearchIndex(-1);
+      searchInputRef.current?.blur();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!showSearchDropdown && searchResults.length > 0) {
+        setShowSearchDropdown(true);
+      } else if (showSearchDropdown && searchResults.length > 0) {
+        setSelectedSearchIndex(prev =>
+          prev < searchResults.length - 1 ? prev + 1 : 0
+        );
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (showSearchDropdown && searchResults.length > 0) {
+        setSelectedSearchIndex(prev =>
+          prev > 0 ? prev - 1 : searchResults.length - 1
+        );
+      }
+    }
+  };
+
+  // Handle product selection from dropdown
+  const handleProductSelect = (productId: number) => {
+    setSearchQuery('');
+    setShowSearchDropdown(false);
+    setSelectedSearchIndex(-1);
+    navigate(`/product/${productId}`);
+  };
+
+  // Handle search input focus
+  const handleSearchFocus = () => {
+    if (searchResults.length > 0) {
+      setShowSearchDropdown(true);
+    }
+  };
+
   return (
     <header className="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -178,15 +348,79 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-4">
             {/* Desktop Search - Hidden on login page */}
             {!isLoginPage && (
-              <div className="hidden sm:block relative">
+              <div className="hidden sm:block relative" ref={dropdownRef}>
                 <span className="material-icons-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">
                   search
                 </span>
                 <input
+                  ref={searchInputRef}
                   type="text"
                   placeholder="Search products..."
-                  className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onKeyDown={handleSearchKeyPress}
+                  onFocus={handleSearchFocus}
+                  disabled={isSearching}
+                  className="w-80 pl-10 pr-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
                 />
+
+                {/* Search Dropdown */}
+                {showSearchDropdown && searchResults.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
+                    <div className="p-2">
+                      <div className="text-xs text-slate-500 dark:text-slate-400 px-2 py-1 mb-1">
+                        {searchResults.length} product{searchResults.length !== 1 ? 's' : ''} found
+                      </div>
+                      {searchResults.map((product, index) => (
+                        <div
+                          key={product.id}
+                          className={`flex items-center space-x-3 px-3 py-3 rounded-md cursor-pointer transition-colors ${
+                            index === selectedSearchIndex
+                              ? 'bg-blue-50 dark:bg-blue-900/30'
+                              : 'hover:bg-slate-50 dark:hover:bg-slate-700'
+                          }`}
+                          onClick={() => handleProductSelect(product.id)}
+                        >
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-10 h-10 rounded-lg object-cover"
+                            onError={(e) => {
+                              e.currentTarget.src = '/placeholder-product.jpg';
+                            }}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                              {product.name}
+                            </div>
+                            <div className="text-sm text-slate-500 dark:text-slate-400">
+                              ${product.price.toFixed(2)}
+                            </div>
+                          </div>
+                          <span className="material-icons-outlined text-slate-400 text-lg">
+                            arrow_forward_ios
+                          </span>
+                        </div>
+                      ))}
+
+                      {/* View all results link */}
+                      <div className="border-t border-slate-200 dark:border-slate-600 mt-2 pt-2">
+                        <Link
+                          to={`/products?search=${encodeURIComponent(searchQuery)}`}
+                          className="flex items-center justify-center space-x-2 w-full px-3 py-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                          onClick={() => {
+                            setSearchQuery('');
+                            setShowSearchDropdown(false);
+                            setSelectedSearchIndex(-1);
+                          }}
+                        >
+                          <span>View all results</span>
+                          <span className="material-icons-outlined text-base">east</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -268,8 +502,66 @@ const Header: React.FC = () => {
                   <input
                     type="text"
                     placeholder="Search products..."
-                    className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    onKeyDown={handleSearchKeyPress}
+                    onFocus={handleSearchFocus}
+                    disabled={isSearching}
+                    className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
                   />
+
+                  {/* Mobile Search Dropdown */}
+                  {showSearchDropdown && searchResults.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg max-h-64 overflow-y-auto z-50">
+                      <div className="p-2">
+                        <div className="text-xs text-slate-500 dark:text-slate-400 px-2 py-1 mb-1">
+                          {searchResults.length} product{searchResults.length !== 1 ? 's' : ''} found
+                        </div>
+                        {searchResults.map((product, index) => (
+                          <div
+                            key={product.id}
+                            className={`flex items-center space-x-2 px-2 py-2 rounded-md cursor-pointer transition-colors ${
+                              index === selectedSearchIndex
+                                ? 'bg-blue-50 dark:bg-blue-900/30'
+                                : 'hover:bg-slate-50 dark:hover:bg-slate-700'
+                            }`}
+                            onClick={() => handleProductSelect(product.id)}
+                          >
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-8 h-8 rounded object-cover"
+                              onError={(e) => {
+                                e.currentTarget.src = '/placeholder-product.jpg';
+                              }}
+                            />
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                                {product.name}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+
+                        {/* Mobile View all results link */}
+                        <div className="border-t border-slate-200 dark:border-slate-600 mt-1 pt-1">
+                          <Link
+                            to={`/products?search=${encodeURIComponent(searchQuery)}`}
+                            className="flex items-center justify-center space-x-1 w-full px-2 py-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                            onClick={() => {
+                              setSearchQuery('');
+                              setShowSearchDropdown(false);
+                              setSelectedSearchIndex(-1);
+                              setIsMobileMenuOpen(false);
+                            }}
+                          >
+                            <span>View all</span>
+                            <span className="material-icons-outlined text-sm">east</span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

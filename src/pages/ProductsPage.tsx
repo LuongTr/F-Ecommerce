@@ -15,6 +15,7 @@ const ProductsPage: React.FC = () => {
       { id: 2, name: 'Shirts', slug: 'shirts' },
       { id: 3, name: 'Pants', slug: 'pants' },
       { id: 4, name: 'Caps', slug: 'caps' },
+      { id: 5, name: 'Hats', slug: 'hats' },
     ]);
   }, []);
 
@@ -45,6 +46,7 @@ const ProductsPage: React.FC = () => {
             { id: 2, name: 'Shirts', slug: 'shirts' },
             { id: 3, name: 'Pants', slug: 'pants' },
             { id: 4, name: 'Caps', slug: 'caps' },
+            { id: 5, name: 'Hats', slug: 'hats' },
           ]);
         }
 
@@ -55,6 +57,7 @@ const ProductsPage: React.FC = () => {
           { id: 2, name: 'Shirts', slug: 'shirts' },
           { id: 3, name: 'Pants', slug: 'pants' },
           { id: 4, name: 'Caps', slug: 'caps' },
+          { id: 5, name: 'Hats', slug: 'hats' },
         ]);
       } finally {
         setLoading(false); // Ensure loading is set to false after categories fetch
@@ -64,9 +67,67 @@ const ProductsPage: React.FC = () => {
     fetchData();
   }, []);
 
-  // Load initial mock products on mount
+  // Load initial products or filtered products based on URL
   useEffect(() => {
-    generateMockProducts();
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+
+    if (categoryParam && categoryParam !== 'all') {
+      // If category param exists, fetch filtered products directly
+      const fetchFilteredProducts = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(`http://localhost:8000/products?category=${categoryParam}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (response.ok) {
+            const productsData = await response.json();
+            const processedProducts = productsData.data.products.map((product: any) => {
+              let images = [];
+              if (product.images) {
+                try {
+                  images = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
+                } catch (e) {
+                  console.warn('Failed to parse product images:', product.images);
+                }
+              }
+
+              return {
+                id: product.id,
+                category: product.category_name,
+                category_slug: product.category_slug,
+                brand: product.brand,
+                image: images?.[0] || 'https://images.unsplash.com/photo-1571910258025-e3a1b0d6a30c?w=400&h=300&fit=crop',
+                title: product.name,
+                description: product.description || `Premium ${product.name} for your style`,
+                price: parseFloat(product.price),
+                quantity: parseInt(product.quantity) || 0,
+                rating: parseFloat(product.rating) || 0,
+              };
+            });
+            setProducts(processedProducts);
+          } else {
+            // Fallback to mock products if API fails
+            generateMockProducts();
+            setSelectedCategory(categoryParam);
+          }
+        } catch (err) {
+          console.error('Error fetching filtered products:', err);
+          generateMockProducts();
+          setSelectedCategory(categoryParam);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchFilteredProducts();
+    } else {
+      // Normal load - all products
+      generateMockProducts();
+    }
   }, []);
 
   // Apply filters when filter states change
@@ -315,7 +376,7 @@ const ProductsPage: React.FC = () => {
       </div>
 
       {/* Search Bar */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <div className="flex gap-4">
           <div className="flex-1">
             <input
@@ -333,7 +394,7 @@ const ProductsPage: React.FC = () => {
             Search
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Filter/Sort Controls */}
       <div className="mb-8 p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md">
@@ -347,8 +408,9 @@ const ProductsPage: React.FC = () => {
               setSelectedBrand('all');
               setSortBy('newest');
               setSearchQuery('');
+              generateMockProducts();
             }}
-            className="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-md transition-colors"
+            className="px-3 py-2 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors"
           >
             Clear All
           </button>
@@ -487,24 +549,11 @@ const ProductsPage: React.FC = () => {
                 price={product.price}
                 onAddToCart={handleAddToCart}
               />
-              {/* Stock indicator */}
-              {product.quantity <= 5 && product.quantity > 0 && (
-                <div className="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">
-                  Only {product.quantity} left
-                </div>
-              )}
-              {product.quantity === 0 && (
-                <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                  Out of Stock
-                </div>
-              )}
-              {/* Rating display */}
-              {product.rating && (
-                <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-sm flex items-center">
-                  <span className="material-icons text-yellow-500 text-sm">star</span>
-                  {product.rating.toFixed(1)}
-                </div>
-              )}
+              {/* Rating display - consistent for all access methods */}
+              <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-sm flex items-center">
+                <span className="material-icons text-yellow-500 text-sm">star</span>
+                {(product.rating && product.rating > 0) ? product.rating.toFixed(1) : '4.5'}
+              </div>
             </div>
           ))}
         </div>

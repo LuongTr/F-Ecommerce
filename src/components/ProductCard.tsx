@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 interface ProductCardProps {
@@ -21,14 +21,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onAddToCart,
   className = ''
 }) => {
-  const handleAddToCart = () => {
-    if (onAddToCart) {
-      onAddToCart(id);
-    }
+  const navigate = useNavigate();
+
+  const handleSeeMore = () => {
+    navigate(`/product/${id}`);
   };
 
   return (
-    <div className={`bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ${className}`}>
+    <div className={`bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 h-[420px] ${className}`}>
       <Link to={`/product/${id}`}>
         <img
           alt={title}
@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           src={image}
         />
       </Link>
-      <div className="p-6">
+      <div className="p-6 flex flex-col justify-between h-32">
         <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
           {title}
         </h3>
@@ -49,10 +49,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </span>
           <Button
             size="sm"
-            onClick={handleAddToCart}
+            onClick={handleSeeMore}
             className="text-sm"
           >
-            Add to Cart
+            See More
           </Button>
         </div>
       </div>

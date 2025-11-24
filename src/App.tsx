@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
+import CategoriesPage from './pages/CategoriesPage';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
@@ -24,6 +25,7 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
